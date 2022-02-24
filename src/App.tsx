@@ -54,8 +54,8 @@ function App() {
            {id: v1(), title: 'What to learn', filter: 'all'},
            {id: v1(), title: 'What to buy', filter: 'all'},
        ])*/
-
     // let [filter, setFilter] = useState<FilterValuesType>("all");
+
     function removeTodo(todolistID: string) {
         setTodolists(todolists.filter((el) => el.id !== todolistID))
     }
@@ -97,7 +97,6 @@ function App() {
     }
 
     function changeSpanTitle(todolistID: string, taskID: string, title: string) {
-        debugger
         setTasks({...tasks, [todolistID]: tasks[todolistID].map((el) => el.id === taskID ? {...el, title} : el)})
     }
 
