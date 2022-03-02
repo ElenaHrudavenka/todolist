@@ -6,7 +6,7 @@ import {
     ChangeTodolistFilterActionType,
     RemoveTodolistAC,
     todolistsReducer
-} from "./todolists-reducers";
+} from "./todolists-reducer";
 
 test('correct todolist should be removed', () => {
     let todolistID1 = v1();
