@@ -13,6 +13,6 @@ test('added todolist', () => {
     const idFromTasks = keys[0]
     const idFromTodolist = endTodolistState[0].id
 
-    expect(idFromTasks).toBe(action.todolistID)
-    expect(idFromTodolist).toBe(action.todolistID)
+    expect(idFromTasks).toBe(action.todolistId)
+    expect(idFromTodolist).toBe(action.todolistId)
 })
