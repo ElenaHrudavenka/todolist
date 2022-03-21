@@ -26,24 +26,24 @@ export type TasksStateType = {
 }
 
 function AppWithReducer() {
-    let todolistID1 = v1();
-    let todolistID2 = v1();
+    let todolistId1 = v1();
+    let todolistId2 = v1();
 
     // let [todolists, setTodolists] = useState<Array<TodolistsType>>([
     let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
-        {id: todolistID1, title: 'What to learn', filter: 'all'},
-        {id: todolistID2, title: 'What to buy', filter: 'all'},
+        {id: todolistId1, title: 'What to learn', filter: 'all'},
+        {id: todolistId2, title: 'What to buy', filter: 'all'},
     ])
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
-        [todolistID1]: [
+        [todolistId1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
             {id: v1(), title: "ReactJS", isDone: false},
             {id: v1(), title: "Rest API", isDone: false},
             {id: v1(), title: "GraphQL", isDone: false},
         ],
-        [todolistID2]: [
+        [todolistId2]: [
             {id: v1(), title: "HTML&CSS2", isDone: true},
             {id: v1(), title: "JS2", isDone: true},
             {id: v1(), title: "ReactJS2", isDone: false},
@@ -66,9 +66,9 @@ function AppWithReducer() {
 
     // let [filter, setFilter] = useState<FilterValuesType>("all");
 
-    function removeTodo(todolistID: string) {
-        //setTodolists(todolists.filter((el) => el.id !== todolistID))
-        let action = removeTodolistAC(todolistID)
+    function removeTodo(todolistId: string) {
+        //setTodolists(todolists.filter((el) => el.id !== todolistId))
+        let action = removeTodolistAC(todolistId)
         dispatchToTodolists(action)
         dispatchToTasks(action)
     }
@@ -118,9 +118,9 @@ function AppWithReducer() {
         dispatchToTasks(changeTaskStatusAC(taskId,isDone,todolistID))
     }
 
-    function changeSpanTitle(todolistID: string, taskID: string, title: string) {
-        /*setTasks({...tasks, [todolistID]: tasks[todolistID].map((el) => el.id === taskID ? {...el, title} : el)})*/
-        dispatchToTasks(changeTaskTitleAC(taskID,title,todolistID))
+    function changeSpanTitle(todolistId: string, taskID: string, title: string) {
+        /*setTasks({...tasks, [todolistId]: tasks[todolistId].map((el) => el.id === taskID ? {...el, title} : el)})*/
+        dispatchToTasks(changeTaskTitleAC(taskID,title,todolistId))
     }
 
     /*   if (filter === "active") {
@@ -160,7 +160,7 @@ function AppWithReducer() {
                                     <Paper style={{padding: "10px"}}>
                                         <Todolist
                                             key={index}
-                                            todolistID={el.id}
+                                            todolistId={el.id}
                                             title={el.title}
                                             tasks={tasksForTodolist}
                                             removeTask={removeTask}
