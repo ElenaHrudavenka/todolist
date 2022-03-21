@@ -8,7 +8,7 @@ type AddItemTypes = {
 
 //const AddItemForm = (props: AddItemTypes) => {
 //ниже деструктуризация того что выше, тогда вместо props.callBack можно использовать callBack
-const AddItemForm = (props: AddItemTypes) => {
+const AddItemForm = React.memo((props: AddItemTypes) => {
     const {callBack, ...pr} = props
 
     let [title, setTitle] = useState("")
@@ -30,7 +30,10 @@ const AddItemForm = (props: AddItemTypes) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error !== null) {
+            setError(null);
+        }
+
         if (e.charCode === 13) {
             addTask();
         }
@@ -60,6 +63,6 @@ const AddItemForm = (props: AddItemTypes) => {
             {/* {error && <div className="error-message">{error}</div>}*/}
         </div>
     );
-};
+})
 
 export default AddItemForm;
