@@ -8,7 +8,7 @@ type AddItemTypes = {
 
 //const AddItemForm = (props: AddItemTypes) => {
 //ниже деструктуризация того что выше, тогда вместо props.callBack можно использовать callBack
-const AddItemForm = React.memo((props: AddItemTypes) => {
+export const AddItemForm = React.memo((props: AddItemTypes) => {
     const {callBack, ...pr} = props
 
     let [title, setTitle] = useState("")
@@ -64,5 +64,3 @@ const AddItemForm = React.memo((props: AddItemTypes) => {
         </div>
     );
 })
-
-export default AddItemForm;

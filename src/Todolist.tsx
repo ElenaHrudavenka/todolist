@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import {FilterValuesType} from './App';
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
