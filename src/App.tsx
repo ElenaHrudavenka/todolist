@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {AppBar, Container, Grid, Paper} from "@material-ui/core";
 import ButtonAppBar from "./Components/ButtonAppBar";
 

@@ -5,7 +5,7 @@ import {todolistsReducer} from "./todolists-reducer";
 //объединяем наши редюсеры в единственный объект-состояния
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolist: todolistsReducer,
+    todolists: todolistsReducer,
 })
 
 //создаем store

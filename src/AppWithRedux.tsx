@@ -2,7 +2,7 @@ import React, {useCallback, useReducer, useState} from "react";
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import {AppBar, Container, Grid, Paper} from "@material-ui/core";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import {
@@ -60,7 +60,7 @@ function AppWithRedux() {
 
 // AppRootStateType тип нашего стейта и должен возвратиться массив TasksStateType
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-    const todolists = useSelector<AppRootStateType, Array<TodolistsType>>(state => state.todolist)
+    const todolists = useSelector<AppRootStateType, Array<TodolistsType>>(state => state.todolists)
 
     /*    // Почему не стоит делать так:
         const state = useSelector<AppRootStateType, AppRootStateType>(state => state)
