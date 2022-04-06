@@ -9,18 +9,41 @@ const instance = axios.create({
     }
 })
 
-type TodoType = {
-    id: string,
-    title: string,
-    addedDate: string,
-    order: number,
-}
 type CommonResponseType<T = {}> = {
     resultCode: number,
     fieldsErrors: string[],
     messages: string[],
     data: T,
 }
+type TodoType = {
+    id: string,
+    title: string,
+    addedDate: string,
+    order: number,
+}
+type TaskType = {
+    id: string,
+    title: string,
+    description: string,
+    todoListId: string,
+    order: number,
+    status: number,
+    priority: number,
+    startDate: string,
+    addedDate: string,
+    deadline: string,
+}
+type DataType = {
+        item: TaskType
+}
+
+type GetTasksResponseType = {
+    error: string | null,
+    totalCount: number,
+    items: TaskType[]
+}
+
+
 /*
 type CreateTodoResponseType = {
     resultCode: number
@@ -45,16 +68,29 @@ type UpdateTodoResponseType = {
 
 //инкапсулируем логику запросов
 export const todolistAPI = {
-    getTodolists(){
-        return instance.get<Array<TodoType>>('todo-lists')
+    getTodolists() {
+        return instance.get<CommonResponseType<TodoType>>('todo-lists')
     },
-    createTodolist(title:string){
-        return instance.post<CommonResponseType<{item: TodoType}>>( `todo-lists`, {title})
+    createTodolist(title: string) {
+        return instance.post<CommonResponseType<{ item: TodoType }>>(`todo-lists`, {title})
     },
-    deleteTodolist(todolistId: string){
+    deleteTodolist(todolistId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolist(todolistId: string, title: string) {
         return instance.put<CommonResponseType>(`todo-lists/${todolistId}`, {title})
+    }
+}
+
+
+export const taskAPI = {
+    postTask(todolistId: string, title: string) {
+        return instance.post<CommonResponseType<DataType>>(`todo-lists/${todolistId}/tasks`, {title})
+    },
+    deleteTask(todolistId: string, taskId:string){
+        return instance.delete<CommonResponseType<DataType>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    getTasks(todolistId: string) {
+        return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
     }
 }
