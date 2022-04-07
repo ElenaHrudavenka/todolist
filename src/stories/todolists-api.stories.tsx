@@ -70,21 +70,35 @@ export const PostTask = () => {
     return <div>{JSON.stringify(tasks)}</div>
 }
 export const DeleteTask = () => {
-    const [task, setTask] = useState<any>(null)
+    const [state, setState] = useState<any>(null)
     const todolistId = 'ab398e82-9c49-4bcd-aa63-b7f61f7a3f0d'
-    const taskId = '253b9c05-0489-4619-aa1c-be67ee936896'
+    const taskId = 'f0804d9f-8ae0-4bcf-b7de-94aa2262fbd0'
     useEffect(() => {
         taskAPI.deleteTask(todolistId, taskId)
             .then((res) => {
-                    setTask(res.data)
+                    setState(res.data)
                 }
             )
     }, [])
     return <div>
-        {task !== null ? `Task ${taskId} has been deleted` : `Task ${taskId} is not found` }
+        {state !== null ? `Task ${taskId} has been deleted` : `Task ${taskId} is not found` }
         {/*{JSON.stringify(task)}*/}
     </div>
 }
+export const PutTask = () => {
+    const [state, setState] = useState<any>(null)
+    const todolistId = 'ab398e82-9c49-4bcd-aa63-b7f61f7a3f0d'
+    const taskId = 'f26e5344-5f3e-4008-b067-1aba127d13ef'
+    const title = 'update title'
+    useEffect(()=>{
+        taskAPI.putTask(todolistId, taskId, title)
+            .then((res)=>{
+                setState(res.data.data.item)
+            })
+    }, [])
+    return <div>{JSON.stringify(state)}</div>
+}
+
 export const GetTasks = () => {
     const [tasks, setTasks] = useState<any>(null)
     const todolistId = 'ab398e82-9c49-4bcd-aa63-b7f61f7a3f0d'
