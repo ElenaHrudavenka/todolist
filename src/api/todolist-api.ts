@@ -43,7 +43,6 @@ type GetTasksResponseType = {
     items: TaskType[]
 }
 
-
 /*
 type CreateTodoResponseType = {
     resultCode: number
@@ -89,6 +88,9 @@ export const taskAPI = {
     },
     deleteTask(todolistId: string, taskId:string){
         return instance.delete<CommonResponseType<DataType>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    putTask(todolistId: string, taskId:string, title:string){
+        return instance.put(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
     },
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
