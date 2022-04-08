@@ -2,7 +2,6 @@ import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import {taskAPI, todolistAPI} from "../api/todolist-api";
 
-
 export default {
     title: 'API'
 }
@@ -98,7 +97,6 @@ export const PutTask = () => {
     }, [])
     return <div>{JSON.stringify(state)}</div>
 }
-
 export const GetTasks = () => {
     const [tasks, setTasks] = useState<any>(null)
     const todolistId = 'ab398e82-9c49-4bcd-aa63-b7f61f7a3f0d'

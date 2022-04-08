@@ -1,5 +1,6 @@
+import React from "react";
+/*
 import { TasksStateType } from "../App";
-
 
 type Action1Type = {
     type: '1'
@@ -30,4 +31,4 @@ export const action1AC = (todolistID1: string): Action1Type => {
 
 export const action2AC = (newTodolistTitle: string): Action2Type => {
     return {type: '2', newTodolistTitle}
-}
+}*/
