@@ -1,28 +1,29 @@
 import React, {useCallback, useReducer, useState} from "react";
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from "./AddItemForm";
-import {AppBar, Container, Grid, Paper} from "@material-ui/core";
+import { Container, Grid, Paper} from "@material-ui/core";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import {
     addTodolistAC,
     changeTodolistAC,
-    changeTodolistFilterAC,
-    removeTodolistAC,
+    changeTodolistFilterAC, FilterValuesType,
+    removeTodolistAC, TodolistDomainType,
     todolistsReducer
 } from "./State/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./State/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./State/store";
+import {TaskType} from "./api/todolist-api";
 
 
-export type FilterValuesType = "all" | "active" | "completed";
+/*export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistsType = {
     id: string
     title: string
     filter: FilterValuesType
-}
+}*/
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
@@ -60,7 +61,7 @@ function AppWithRedux() {
 
 // AppRootStateType тип нашего стейта и должен возвратиться массив TasksStateType
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-    const todolists = useSelector<AppRootStateType, Array<TodolistsType>>(state => state.todolists)
+    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
 
     /*    // Почему не стоит делать так:
         const state = useSelector<AppRootStateType, AppRootStateType>(state => state)
@@ -110,9 +111,9 @@ function AppWithRedux() {
     }, [dispatch])
 
 
-    const changeStatus = useCallback(function (todolistID: string, taskId: string, isDone: boolean) {
+    const changeStatus = useCallback(function (todolistID: string, taskId: string, status:number) {
         // dispatchToTasks(changeTaskStatusAC(taskId, isDone, todolistID))
-        dispatch(changeTaskStatusAC(taskId, isDone, todolistID))
+        dispatch(changeTaskStatusAC(taskId, status, todolistID))
     }, [dispatch])
 
     const changeSpanTitle = useCallback(function (todolistId: string, taskID: string, title: string) {
