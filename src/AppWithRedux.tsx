@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer, useState} from "react";
+import React, {useCallback, useEffect, useReducer, useState} from "react";
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -9,13 +9,13 @@ import {
     addTodolistAC,
     changeTodolistAC,
     changeTodolistFilterAC, FilterValuesType,
-    removeTodolistAC, TodolistDomainType,
+    removeTodolistAC, setTodolistsAC, TodolistDomainType,
     todolistsReducer
 } from "./State/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./State/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./State/store";
-import {TaskType} from "./api/todolist-api";
+import {TaskType, todolistAPI, TodolistType} from "./api/todolist-api";
 
 
 /*export type FilterValuesType = "all" | "active" | "completed";
@@ -29,7 +29,15 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
-    console.log("App is called")
+
+    useEffect(()=>{
+        todolistAPI.getTodolists()
+            .then((res) => {
+                let todos =res.data
+                dispatch(setTodolistsAC(todos))
+            })
+    }, [])
+
     let todolistId1 = v1();
     let todolistId2 = v1();
 
@@ -62,7 +70,6 @@ function AppWithRedux() {
 // AppRootStateType тип нашего стейта и должен возвратиться массив TasksStateType
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-
     /*    // Почему не стоит делать так:
         const state = useSelector<AppRootStateType, AppRootStateType>(state => state)
         const ta = state.tasks
