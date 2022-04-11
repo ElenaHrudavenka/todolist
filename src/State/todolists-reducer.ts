@@ -1,5 +1,7 @@
 import {v1} from "uuid";
 import { TodolistType } from './../api/todolist-api'
+import {Dispatch} from "redux";
+import {AppRootStateType} from "./store";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -25,29 +27,29 @@ export type ChangeTodolistFilterActionType = {
     id: string
     newTodolistFilter: FilterValuesType
 }
+export type SetTodosActionType = ReturnType<typeof setTodolistsAC>
 //юнион тип
 type ActionsType =
     RemoveTodolistActionType
     | AddTodolistActionType
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
+| SetTodosActionType
 
 const initialState: Array<TodolistDomainType> = []
 
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> /*|  { filter: string; id: string; title: string }*/ => {
     switch (action.type) {
-        case 'REMOVE-TODOLIST': {
+        case "SET-TODOS":
+            return  action.todos.map(el =>({...el, filter: "all"}))
+        case 'REMOVE-TODOLIST':
             return state.filter((el) => el.id !== action.id)
-        }
-        case 'ADD-TODOLIST': {
+        case 'ADD-TODOLIST':
             return [{id: action.todolistId, title: action.newTodolistTitle, filter: "all", addedDate:'', order:0}, ...state]
-        }
-        case 'CHANGE-TODOLIST-TITLE': {
+        case 'CHANGE-TODOLIST-TITLE':
             return state.map((el) => el.id === action.id ? {...el, title: action.changeTodolistTitle} : el)
-        }
-        case 'CHANGE-TODOLIST-FILTER': {
+        case 'CHANGE-TODOLIST-FILTER':
             return state.map((el) => el.id === action.id ? {...el, filter: action.newTodolistFilter} : el)
-        }
         default:
             return state
     }
@@ -75,3 +77,10 @@ export const changeTodolistFilterAC = (todolistId: string, newTodolistFilter: Fi
         newTodolistFilter
     }
 }
+export const setTodolistsAC = (todos: Array<TodolistType>) => {
+        return {
+            type: 'SET-TODOS',
+            todos,
+        } as const
+}
+

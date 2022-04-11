@@ -72,7 +72,6 @@ export const Todolist = React.memo((props: PropsType) => {
     if (props.filter === "completed") {
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed);
     }
-    console.log("Todo is called")
     return <div>
         <h3>
             <EditableSpan title={props.title} onChange={changeTodoTitleHandler}/>
@@ -90,9 +89,12 @@ export const Todolist = React.memo((props: PropsType) => {
             />
             <button onClick={addTask}>+</button>
             {error && <div className="error-message">{error}</div>}
-        </div>*/}
+        </div>*/
+        }
+
         <div>
             {
+               /* tasksForTodolist?.map(el => {*/
                 tasksForTodolist.map(el => {
                     return <Task removeTask={props.removeTask}
                                  changeTaskStatus={props.changeTaskStatus}

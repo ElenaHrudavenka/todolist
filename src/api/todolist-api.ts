@@ -81,7 +81,7 @@ type UpdateTodoResponseType = {
 //инкапсулируем логику запросов
 export const todolistAPI = {
     getTodolists() {
-        return instance.get<CommonResponseType<TodolistType>>('todo-lists')
+        return instance.get<Array<TodolistType>>('todo-lists')
     },
     createTodolist(title: string) {
         return instance.post<CommonResponseType<{ item: TodolistType }>>(`todo-lists`, {title})
