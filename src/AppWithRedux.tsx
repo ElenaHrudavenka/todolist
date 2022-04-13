@@ -3,53 +3,40 @@ import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from "./AddItemForm";
-import { Container, Grid, Paper} from "@material-ui/core";
+import {Container, Grid, Paper} from "@material-ui/core";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import {
-    addTodolistAC,
-    changeTodolistAC,
-    changeTodolistFilterAC, fetchTodosThunk, FilterValuesType,
-    removeTodolistAC, TodolistDomainType,
+    changeTodolistAC, changeTodolistFilterAC, createTodolistTC,
+    deleteTodolistTC, fetchTodosTC,
+    FilterValuesType,
+    TodolistDomainType,
 } from "./State/todolists-reducer";
 import {
-    changeTaskStatusAC,
     changeTaskTitleAC,
-    removeTaskTC,
-    addTaskTC, changeTaskStatusTC,
+    removeTaskTC, addTaskTC, changeTaskStatusTC,
 } from "./State/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./State/store";
 import {TaskType} from "./api/todolist-api";
 
-
-/*export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistsType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}*/
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
 function AppWithRedux() {
 
-    useEffect(()=>{
-        dispatch(fetchTodosThunk)
+    useEffect(() => {
+        dispatch(fetchTodosTC())
     }, [])
 
     let todolistId1 = v1();
     let todolistId2 = v1();
 
-    // let [todolists, setTodolists] = useState<Array<TodolistsType>>([
-
-    /* Используем useReducer, закоментировала т.к. переходим на  useSelector и Redux
+    /*
     let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
             {id: todolistID1, title: 'What to learn', filter: 'all'},
             {id: todolistID2, title: 'What to buy', filter: 'all'},
-        ])*/
-
-    /* Используем useReducer, закоментировала т.к. переходим на  useSelector и Redux
+        ])
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
             [todolistID1]: [
                 {id: v1(), title: "HTML&CSS", isDone: true},
@@ -67,72 +54,50 @@ function AppWithRedux() {
             ]
         });*/
 
-// AppRootStateType тип нашего стейта и должен возвратиться массив TasksStateType
+    // AppRootStateType тип нашего стейта и должен возвратиться массив TasksStateType
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-    /*    // Почему не стоит делать так:
-        const state = useSelector<AppRootStateType, AppRootStateType>(state => state)
-        const ta = state.tasks
-        const to = state.todolist
-        По сути мы подписываемся на изменения всего стейта, и при любом изменении в стейте компоненты будут перерисовываться, даже если это не нужно,
+    /*  Почему не стоит получать весь стейт. По сути мы подписываемся на изменения всего стейта, и при любом изменении в
+        стейте компоненты будут перерисовываться, даже если это не нужно,
         т.е. нужно для каждого отдельного свойства стейта доставать его через свой useSelector, избежим ненужных перерисовок
-
-        но вроде можно сделать с деструктуризацией, и прямо красота
+        Можно сделать с деструктуризацией (хороший способ)
         const {tasks, todolists} = useSelector<AppRootStateType, AppRootStateType>(state => state)
-
         */
 
     const dispatch = useDispatch()
-
+    //т.к.редюсеры сработают все, то нам нужен только один диспач */
     const removeTodo = useCallback(function (todolistId: string) {
-        let action = removeTodolistAC(todolistId)
-
-        /*      dispatchToTodolists(action)
-                dispatchToTasks(action)
-                т.к.редюсеры сработают все, то нам нужен только один диспач */
-        dispatch(action)
+        dispatch(deleteTodolistTC(todolistId))
     }, [dispatch])
 
     const changeTodoTitle = useCallback(function (todolistID: string, title: string) {
         let action = changeTodolistAC(todolistID, title)
-        // dispatchToTodolists(action)
         dispatch(action)
     }, [dispatch])
 
     const removeTask = useCallback(function (todolistId: string, id: string) {
-        /*let action = removeTaskAC(id, todolistId)*/
-            dispatch(removeTaskTC(id, todolistId))
-        //dispatchToTasks(action)
-        /*dispatch(action)*/
+        dispatch(removeTaskTC(id, todolistId))
     }, [dispatch])
 
     const addTask = useCallback(function (todolistId: string, title: string) {
-        //dispatchToTasks(addTaskAC(title, todolistID))
-        dispatch( addTaskTC(title,todolistId) )
+        dispatch(addTaskTC(title, todolistId))
 
     }, [dispatch])
 
     const addTodolist = useCallback((newTitle: string) => {
-        let action = addTodolistAC(newTitle)
-        /* dispatchToTodolists(action)
-         dispatchToTasks(action)*/
-        dispatch(action)
+        dispatch(createTodolistTC(newTitle))
     }, [dispatch])
 
 
-    const changeStatus = useCallback(function (todolistID: string, taskId: string, status:number) {
-        // dispatchToTasks(changeTaskStatusAC(taskId, isDone, todolistID))
-        //dispatch(changeTaskStatusAC(taskId, status, todolistID))
+    const changeStatus = useCallback(function (todolistID: string, taskId: string, status: number) {
         dispatch(changeTaskStatusTC(todolistID, status, taskId))
     }, [dispatch])
 
     const changeSpanTitle = useCallback(function (todolistId: string, taskID: string, title: string) {
-        // dispatchToTasks(changeTaskTitleAC(taskID, title, todolistID))
         dispatch(changeTaskTitleAC(taskID, title, todolistId))
     }, [dispatch])
 
     const changeFilter = useCallback(function (todolistId: string, newTodolistFilter: FilterValuesType) {
-        // dispatchToTodolists(changeTodolistFilterAC(todolistID, newTodolistFilter))
         dispatch(changeTodolistFilterAC(todolistId, newTodolistFilter))
     }, [dispatch])
 
@@ -148,14 +113,8 @@ function AppWithRedux() {
                     {
                         todolists.map((el, index) => {
                             let tasksForTodolist = tasks[el.id];
-                            /*                          Перенесла проверку в компоненту Todolist, т.к. filter возвращает новый массив и если
-                                                        active или completed, то перерисуются все тудулисты
-                                                        if (el.filter === "active") {
-                                                            tasksForTodolist = tasks[el.id].filter(t => !t.isDone);
-                                                        }
-                                                        if (el.filter === "completed") {
-                                                            tasksForTodolist = tasks[el.id].filter(t => t.isDone);
-                                                        }*/
+                            /* Перенесла проверку фильтра el.filter === ... в компоненту Todolist, т.к. filter возвращает новый массив и если
+                            active или completed, то перерисуются все тудулисты */
                             return (
                                 <Grid item key={el.id}>
                                     <Paper style={{padding: "10px"}}>
