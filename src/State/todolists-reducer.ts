@@ -1,7 +1,8 @@
 import {v1} from "uuid";
-import { TodolistType } from './../api/todolist-api'
+import {todolistAPI, TodolistType} from './../api/todolist-api'
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
+import {useEffect} from "react";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -83,4 +84,11 @@ export const setTodolistsAC = (todos: Array<TodolistType>) => {
             todos,
         } as const
 }
-
+// thunk
+export const fetchTodosThunk = (dispach: Dispatch, getState: () => AppRootStateType):void => {
+        todolistAPI.getTodolists()
+            .then((res) => {
+            let todos = res.data
+                dispach(setTodolistsAC(todos))
+        })
+}

@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {IconButton} from "@material-ui/core";
@@ -7,12 +7,8 @@ import {Button} from "@mui/material";
 import {Task} from "./Task";
 import {FilterValuesType} from "./State/todolists-reducer";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
-
-/*export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}*/
+import {fetchTasksTC} from "./State/tasks-reducer";
+import {useDispatch} from "react-redux";
 
 type PropsType = {
     todolistId: string
@@ -29,29 +25,10 @@ type PropsType = {
 }
 
 export const Todolist = React.memo((props: PropsType) => {
-
-    /*    let [title, setTitle] = useState("")
-        let [error, setError] = useState<string | null>(null)
-
-        const addTask = () => {
-            if (title.trim() !== "") {
-                props.addTask(props.todolistID, title.trim());
-                setTitle("");
-            } else {
-                setError("Title is required");
-            }
-        }*/
-
-    /*   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-           setTitle(e.currentTarget.value)
-       }
-
-       const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-           setError(null);
-           if (e.charCode === 13) {
-               addTask();
-           }
-       }*/
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchTasksTC(props.todolistId))
+    }, [])
 
     const onAllClickHandler = useCallback(() => props.changeFilter(props.todolistId, "all"), [props.changeFilter, props.todolistId])
     const onActiveClickHandler = useCallback(() => props.changeFilter(props.todolistId, "active"), [props.changeFilter, props.todolistId])
@@ -75,35 +52,22 @@ export const Todolist = React.memo((props: PropsType) => {
     return <div>
         <h3>
             <EditableSpan title={props.title} onChange={changeTodoTitleHandler}/>
-            {/*<button onClick={onClickHandlerForDeleteTodo}>x</button>*/}
             <IconButton onClick={onClickHandlerForDeleteTodo}>
                 <Delete/>
             </IconButton>
         </h3>
         <AddItemForm callBack={addTaskHandler}/>
-        {/*<div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
-            />
-            <button onClick={addTask}>+</button>
-            {error && <div className="error-message">{error}</div>}
-        </div>*/
-        }
-
         <div>
             {
-               /* tasksForTodolist?.map(el => {*/
+                /* tasksForTodolist?.map(el => {*/
                 tasksForTodolist.map(el => {
                     return <Task removeTask={props.removeTask}
                                  changeTaskStatus={props.changeTaskStatus}
                                  changeSpanTitle={props.changeSpanTitle}
                                  task={el}
-                                 todolistId = {props.todolistId}
-                                 key = {el.id}
+                                 todolistId={props.todolistId}
+                                 key={el.id}
                     />
-
                 })
             }
         </div>
@@ -114,13 +78,6 @@ export const Todolist = React.memo((props: PropsType) => {
                     color="error">Active</Button>
             <Button variant={props.filter === 'completed' ? "outlined" : "text"}
                     onClick={onCompletedClickHandler}>Complited</Button>
-
-            {/* <button className={props.filter === 'all' ? "active-filter" : ""}
-                    onClick={onAllClickHandler}>All</button>
-            <button className={props.filter === 'active' ? "active-filter" : ""}
-                onClick={onActiveClickHandler}>Active</button>
-            <button className={props.filter === 'completed' ? "active-filter" : ""}
-                onClick={onCompletedClickHandler}>Completed</button>*/}
         </div>
     </div>
 })
