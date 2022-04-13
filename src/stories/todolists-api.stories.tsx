@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
-import {taskAPI, todolistAPI} from "../api/todolist-api";
+import {taskAPI, todolistAPI, UpdateTaskModelType} from "../api/todolist-api";
 
 export default {
     title: 'API'
@@ -80,18 +80,26 @@ export const DeleteTask = () => {
             )
     }, [])
     return <div>
-        {state !== null ? `Task ${taskId} has been deleted` : `Task ${taskId} is not found` }
+        {state !== null ? `Task ${taskId} has been deleted` : `Task ${taskId} is not found`}
         {/*{JSON.stringify(task)}*/}
     </div>
 }
-export const PutTask = () => {
+export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
     const todolistId = 'ab398e82-9c49-4bcd-aa63-b7f61f7a3f0d'
-    const taskId = 'f26e5344-5f3e-4008-b067-1aba127d13ef'
-    const title = 'update title'
-    useEffect(()=>{
-        taskAPI.putTask(todolistId, taskId, title)
-            .then((res)=>{
+    const taskId = 'a6be60f6-c2bd-46cc-b819-9f15861cb29c'
+    const model: UpdateTaskModelType = {
+        title: 'update title',
+        description: '',
+        status: 2,
+        priority: 0,
+        startDate: '',
+        deadline: '',
+    }
+
+    useEffect(() => {
+        taskAPI.putTask(todolistId, taskId, model)
+            .then((res) => {
                 setState(res.data.data.item)
             })
     }, [])
