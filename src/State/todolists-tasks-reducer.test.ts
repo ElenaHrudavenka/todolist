@@ -4,7 +4,13 @@ import {tasksReducer, TasksStateType} from "./tasks-reducer";
 test('added todolist', () => {
     const startTasksState: TasksStateType = {}
     const startTodolistState: Array<TodolistDomainType> = []
-    const action = addTodolistAC('title no matter')
+    const newTodolist = {
+        id: "QWERTY",
+        title: "New todolist title",
+        addedDate: "",
+        order: 0,
+    }
+    const action = addTodolistAC(newTodolist)
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistState = todolistsReducer(startTodolistState, action)
 
@@ -12,6 +18,6 @@ test('added todolist', () => {
     const idFromTasks = keys[0]
     const idFromTodolist = endTodolistState[0].id
 
-    expect(idFromTasks).toBe(action.todolistId)
-    expect(idFromTodolist).toBe(action.todolistId)
+    expect(idFromTasks).toBe(action.newTodolist.id)
+    expect(idFromTodolist).toBe(action.newTodolist.id)
 })

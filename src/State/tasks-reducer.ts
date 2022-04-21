@@ -1,5 +1,4 @@
-import {v1} from "uuid";
-import {RemoveTodolistActionType, SetTodosActionType} from "./todolists-reducer";
+import {AddTodolistActionType, RemoveTodolistActionType, SetTodosActionType} from "./todolists-reducer";
 import {taskAPI, TaskType, UpdateTaskModelType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
@@ -27,11 +26,11 @@ type changeTaskTitleActionType = {
     title: string
     todolistId: string
 }
-type addTodolistActionType = {
+/*type addTodolistActionType = {
     type: 'ADD-TODOLIST'
     todolistId: string
     newTodolistTitle: string
-}
+}*/
 type FetchTasksActionType = ReturnType<typeof fetchTasksAC>
 
 export type TasksStateType = {
@@ -40,7 +39,7 @@ export type TasksStateType = {
 //юнион тип
 type ActionsType = removeTaskActionType | addTaskActionType |
     changeTaskStatusActionType | changeTaskTitleActionType |
-    addTodolistActionType | RemoveTodolistActionType | SetTodosActionType | FetchTasksActionType
+    AddTodolistActionType | RemoveTodolistActionType | SetTodosActionType | FetchTasksActionType
 
 //при использовании редакса обязательно использовать инициализационный стейт, закидываем в редюсер как
 //параметр по умолчанию для стейта
@@ -85,7 +84,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 } : el)
             }
         case 'ADD-TODOLIST':
-            return {...state, [action.todolistId]: []}
+            return {...state, [action.newTodolist.id]: []}
         case 'REMOVE-TODOLIST':
             const stateCopy = {...state}
             delete stateCopy[action.id]
