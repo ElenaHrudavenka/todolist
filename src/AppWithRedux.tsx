@@ -4,19 +4,19 @@ import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from "./AddItemForm";
 import {Container, Grid, Paper} from "@material-ui/core";
-import ButtonAppBar from "./Components/ButtonAppBar";
+import ButtonAppBar from "./components/ButtonAppBar";
 import {
     changeTodolistAC, changeTodolistFilterAC, createTodolistTC,
     deleteTodolistTC, fetchTodosTC,
     FilterValuesType,
     TodolistDomainType,
-} from "./State/todolists-reducer";
+} from "./state/todolists-reducer";
 import {
     changeTaskTitleAC,
     removeTaskTC, addTaskTC, changeTaskStatusTC,
-} from "./State/tasks-reducer";
+} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./State/store";
+import {AppRootStateType} from "./state/store";
 import {TaskType} from "./api/todolist-api";
 
 export type TasksStateType = {

@@ -81,13 +81,13 @@ export const todolistAPI = {
 
 
 export const taskAPI = {
-    postTask(todolistId: string, title: string) {
+    createTask(todolistId: string, title: string) {
         return instance.post<CommonResponseType<DataType>>(`todo-lists/${todolistId}/tasks`, {title})
     },
     deleteTask(todolistId: string, taskId:string){
         return instance.delete<CommonResponseType<DataType>>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
-    putTask(todolistId: string, taskId:string, model: UpdateTaskModelType){
+    updateTask(todolistId: string, taskId:string, model: UpdateTaskModelType){
         return instance.put<UpdateTaskModelType, AxiosResponse<CommonResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
     getTasks(todolistId: string) {

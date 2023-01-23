@@ -61,7 +61,7 @@ export const PostTask = () => {
     const todolistId = 'ab398e82-9c49-4bcd-aa63-b7f61f7a3f0d'
     const title = "newTaskTitle"
     useEffect(() => {
-        taskAPI.postTask(todolistId, title)
+        taskAPI.createTask(todolistId, title)
             .then((res) => {
                 setTasks(res.data.data.item)
             })
@@ -98,7 +98,7 @@ export const UpdateTask = () => {
     }
 
     useEffect(() => {
-        taskAPI.putTask(todolistId, taskId, model)
+        taskAPI.updateTask(todolistId, taskId, model)
             .then((res) => {
                 setState(res.data.data.item)
             })
