@@ -1,8 +1,8 @@
 import {Provider} from "react-redux";
-import {AppRootStateType, store} from "../State/store";
+import {AppRootStateType, store} from "../state/store";
 import {combineReducers, createStore} from "redux";
-import { tasksReducer } from "../State/tasks-reducer";
-import { todolistsReducer } from "../State/todolists-reducer";
+import { tasksReducer } from "../state/tasks-reducer";
+import { todolistsReducer } from "../state/todolists-reducer";
 import {v1} from "uuid";
 
 /* этого достаточно для отображения компоненты без инициализационного стейта, но это не наглядно

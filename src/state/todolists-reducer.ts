@@ -1,7 +1,5 @@
-import {v1} from "uuid";
 import {todolistAPI, TodolistType} from './../api/todolist-api'
 import {Dispatch} from "redux";
-import {AppRootStateType} from "./store";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistDomainType = TodolistType & {
@@ -45,7 +43,6 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return state.filter((el) => el.id !== action.id)
         case 'ADD-TODOLIST':
             //let newTodolistWithFilter = action.newTodolist, filter:"all"
-            debugger
             return [{...action.newTodolist, filter: action.filter}, ...state]
         case 'CHANGE-TODOLIST-TITLE':
             return state.map((el) => el.id === action.id ? {...el, title: action.changeTodolistTitle} : el)
@@ -101,7 +98,6 @@ export const deleteTodolistTC = (todolistId:string) => (dispatch: Dispatch) => {
 }
 
 export const createTodolistTC = (title:string) => (dispatch: Dispatch) => {
-    debugger
   todolistAPI.createTodolist(title)
       .then((res) => {
           let newTodolist = res.data.data.item

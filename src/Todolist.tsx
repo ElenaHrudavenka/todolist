@@ -5,9 +5,9 @@ import {IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Button} from "@mui/material";
 import {Task} from "./Task";
-import {FilterValuesType} from "./State/todolists-reducer";
+import {FilterValuesType} from "./state/todolists-reducer";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
-import {fetchTasksTC} from "./State/tasks-reducer";
+import {fetchTasksTC} from "./state/tasks-reducer";
 import {useDispatch} from "react-redux";
 
 type PropsType = {
