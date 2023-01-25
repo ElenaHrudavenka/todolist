@@ -1,23 +1,27 @@
-import {addTodolistAC, TodolistDomainType, todolistsReducer} from "./todolists-reducer";
-import {tasksReducer, TasksStateType} from "./tasks-reducer";
+import {
+  addTodolistAC,
+  TodolistDomainType,
+  todolistsReducer,
+} from "./todolists-reducer";
+import { tasksReducer, TasksStateType } from "./tasks-reducer";
 
-test('added todolist', () => {
-    const startTasksState: TasksStateType = {}
-    const startTodolistState: Array<TodolistDomainType> = []
-    const newTodolist = {
-        id: "QWERTY",
-        title: "New todolist title",
-        addedDate: "",
-        order: 0,
-    }
-    const action = addTodolistAC(newTodolist)
-    const endTasksState = tasksReducer(startTasksState, action)
-    const endTodolistState = todolistsReducer(startTodolistState, action)
+test("added todolist", () => {
+  const startTasksState: TasksStateType = {};
+  const startTodolistState: Array<TodolistDomainType> = [];
+  const newTodolist = {
+    id: "QWERTY",
+    title: "New todolist title",
+    addedDate: "",
+    order: 0,
+  };
+  const action = addTodolistAC(newTodolist);
+  const endTasksState = tasksReducer(startTasksState, action);
+  const endTodolistState = todolistsReducer(startTodolistState, action);
 
-    const keys = Object.keys(endTasksState)
-    const idFromTasks = keys[0]
-    const idFromTodolist = endTodolistState[0].id
+  const keys = Object.keys(endTasksState);
+  const idFromTasks = keys[0];
+  const idFromTodolist = endTodolistState[0].id;
 
-    expect(idFromTasks).toBe(action.newTodolist.id)
-    expect(idFromTodolist).toBe(action.newTodolist.id)
-})
+  expect(idFromTasks).toBe(action.newTodolist.id);
+  expect(idFromTodolist).toBe(action.newTodolist.id);
+});
