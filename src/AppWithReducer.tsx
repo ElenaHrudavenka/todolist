@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, { useReducer, useState } from "react";
 /*
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
@@ -8,7 +8,7 @@ import { Container, Grid, Paper} from "@material-ui/core";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import {
     addTodolistAC,
-    changeTodolistAC,
+    changeTodolistTitleAC,
     changeTodolistFilterAC, FilterValuesType,
     removeTodolistAC,
     todolistsReducer
@@ -76,7 +76,7 @@ function AppWithReducer() {
 
     function changeTodoTitle(todolistID: string, title: string) {
         //setTodolists(todolists.map((el) => el.id === todolistID ? {...el, title} : el))
-        let action = changeTodolistAC(todolistID, title)
+        let action = changeTodolistTitleAC(todolistID, title)
         dispatchToTodolists(action)
     }
 
@@ -119,9 +119,9 @@ function AppWithReducer() {
         dispatchToTasks(changeTaskStatusAC(taskId,isDone,todolistID))
     }
 
-    function changeSpanTitle(todolistId: string, taskID: string, title: string) {
-        /!*setTasks({...tasks, [todolistId]: tasks[todolistId].map((el) => el.id === taskID ? {...el, title} : el)})*!/
-        dispatchToTasks(changeTaskTitleAC(taskID,title,todolistId))
+    function changeSpanTitle(todolistId: string, taskId: string, title: string) {
+        /!*setTasks({...tasks, [todolistId]: tasks[todolistId].map((el) => el.id === taskId ? {...el, title} : el)})*!/
+        dispatchToTasks(changeTaskTitleAC(taskId,title,todolistId))
     }
 
     /!*   if (filter === "active") {

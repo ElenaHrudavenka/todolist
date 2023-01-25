@@ -1,66 +1,67 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button, IconButton, TextField} from "@material-ui/core";
-import {AddBox} from "@material-ui/icons";
+import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import { Button, IconButton, TextField } from "@material-ui/core";
+import { AddBox } from "@material-ui/icons";
 
 type AddItemTypes = {
-    callBack: (title: string) => void
-}
+  callBack: (title: string) => void;
+};
 
 //const AddItemForm = (props: AddItemTypes) => {
 //ниже деструктуризация того что выше, тогда вместо props.callBack можно использовать callBack
 export const AddItemForm = React.memo((props: AddItemTypes) => {
-    const {callBack, ...pr} = props
+  const { callBack, ...pr } = props;
 
-    let [title, setTitle] = useState("")
-    let [error, setError] = useState<string | null>(null)
+  let [title, setTitle] = useState("");
+  let [error, setError] = useState<string | null>(null);
 
-    const addTask = () => {
-        if (title.trim() !== "") {
-            //props.callBack(title.trim());
-            //после деструктуризации пропсов можно записать бе слова props
-            callBack(title.trim());
-            setTitle("");
-        } else {
-            setError("Title is required");
-        }
+  const addTask = () => {
+    if (title.trim() !== "") {
+      //props.callBack(title.trim());
+      //после деструктуризации пропсов можно записать бе слова props
+      callBack(title.trim());
+      setTitle("");
+    } else {
+      setError("Title is required");
+    }
+  };
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
+  };
+
+  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (error !== null) {
+      setError(null);
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+    if (e.charCode === 13) {
+      addTask();
     }
+  };
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (error !== null) {
-            setError(null);
-        }
+  return (
+    <div>
+      <TextField
+        variant="outlined"
+        value={title}
+        onChange={onChangeHandler}
+        onKeyPress={onKeyPressHandler}
+        size="small"
+        error={!!error}
+        label="Title"
+        helperText={error}
+      />
 
-        if (e.charCode === 13) {
-            addTask();
-        }
-    }
-
-    return (
-        <div>
-            <TextField variant="outlined"
-                       value={title}
-                       onChange={onChangeHandler}
-                       onKeyPress={onKeyPressHandler}
-                       size="small"
-                       error={!!error}
-                       label="Title"
-                       helperText={error}
-            />
-
-            {/* <input value={title}
+      {/* <input value={title}
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    className={error ? "error" : ""}
             />*/}
-            {/*<Button onClick={addTask} variant="contained" style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}>+</Button>*/}
-            <IconButton onClick={addTask} color="primary">
-                <AddBox/>
-            </IconButton>
-            {/* {error && <div className="error-message">{error}</div>}*/}
-        </div>
-    );
-})
+      {/*<Button onClick={addTask} variant="contained" style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}>+</Button>*/}
+      <IconButton onClick={addTask} color="primary">
+        <AddBox />
+      </IconButton>
+      {/* {error && <div className="error-message">{error}</div>}*/}
+    </div>
+  );
+});
