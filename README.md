@@ -1,6 +1,6 @@
 # Name: TODOLIST
 
-This is my education project (React/Redux/TypeScript/Storybook/Material UI)
+This is my education project (React/Redux/TypeScript/Storybook/Material UI/Formik)
 
 ## Available Scripts
 
