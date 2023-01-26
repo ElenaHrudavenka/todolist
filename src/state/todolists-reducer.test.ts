@@ -3,11 +3,10 @@ import {
   addTodolistAC,
   changeTodolistTitleAC,
   changeTodolistFilterAC,
-  FilterValuesType,
   removeTodolistAC,
-  TodolistDomainType,
   todolistsReducer,
 } from "./todolists-reducer";
+import { FilterValuesType, TodolistDomainType } from "./todolists-reducer.type";
 
 let todolistId1: string;
 let todolistId2: string;

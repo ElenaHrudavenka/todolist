@@ -1,11 +1,11 @@
-import AppWithRedux from "./AppWithRedux";
+import App from "./App";
 import { Provider } from "react-redux";
-import { store } from "./state/store";
-import { ReduxStoreProviderDecorator } from "./stories/ReduxStoreProviderDecorator";
+import { store } from "./store";
+import { ReduxStoreProviderDecorator } from "../stories/ReduxStoreProviderDecorator";
 
 export default {
   title: "AppWithRedux Component",
-  component: AppWithRedux,
+  component: App,
   decorators: [ReduxStoreProviderDecorator],
 };
 
@@ -14,5 +14,5 @@ export const AppWithReduxBaseExample = () => {
     return <Provider store={store}><AppWithRedux/> </Provider>
     т.к. используем декоратор, то оборачивать не нужно
     */
-  return <AppWithRedux />;
+  return <App />;
 };
