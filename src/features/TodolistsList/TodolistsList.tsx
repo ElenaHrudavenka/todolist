@@ -42,7 +42,7 @@ const TodolistsList = () => {
             });*/
     useEffect(() => {
         dispatch(fetchTodosTC());
-    }, []);
+    }, [dispatch]);
     // AppRootStateType тип нашего стейта и должен возвратиться массив TasksStateType
     const tasks = useSelector<AppRootStateType, TasksStateType>(
         (state) => state.tasks
@@ -56,7 +56,6 @@ const TodolistsList = () => {
           Можно сделать с деструктуризацией (хороший способ)
           const {tasks, todolists} = useSelector<AppRootStateType, AppRootStateType>(state => state)
           */
-
     const addTodolist = useCallback(
         (newTitle: string) => {
             dispatch(createTodolistTC(newTitle));
@@ -69,42 +68,36 @@ const TodolistsList = () => {
         },
         [dispatch]
     );
-
     const changeTodoTitle = useCallback(
         function (todolistID: string, title: string) {
             dispatch(changeTodolistTitleTC(todolistID, title));
         },
         [dispatch]
     );
-
     const removeTask = useCallback(
         function (todolistId: string, id: string) {
             dispatch(removeTaskTC(id, todolistId));
         },
         [dispatch]
     );
-
     const addTask = useCallback(
         function (todolistId: string, title: string) {
             dispatch(addTaskTC(title, todolistId));
         },
         [dispatch]
     );
-
     const changeStatus = useCallback(
         function (todolistID: string, taskId: string, status: number) {
             dispatch(changeTaskStatusTC(todolistID, status, taskId));
         },
         [dispatch]
     );
-
     const changeSpanTitle = useCallback(
         function (todolistId: string, taskId: string, title: string) {
             dispatch(changeTaskTitleTC(taskId, title, todolistId));
         },
         [dispatch]
     );
-
     const changeFilter = useCallback(
         function (todolistId: string, newTodolistFilter: FilterValuesType) {
             dispatch(changeTodolistFilterAC(todolistId, newTodolistFilter));
