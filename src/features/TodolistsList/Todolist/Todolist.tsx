@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect } from "react";
-import { AddItemForm } from "./AddItemForm";
-import { EditableSpan } from "./EditableSpan";
+import { AddItemForm } from "../../../components/AddItemForm/AddItemForm";
+import { EditableSpan } from "../../../components/EditableSpan/EditableSpan";
 import { IconButton } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import { Button } from "@mui/material";
-import { Task } from "./Task";
-import { FilterValuesType } from "./state/todolists-reducer";
-import { TaskStatuses, TaskType } from "./api/todolist-api";
-import { fetchTasksTC } from "./state/tasks-reducer";
+import { Task } from "./Task/Task";
+import { TaskStatuses, TaskType } from "../../../api/todolist-api";
+import { fetchTasksTC } from "../../../state/tasks-reducer";
 import { useDispatch } from "react-redux";
+import { FilterValuesType } from "../../../state/todolists-reducer.type";
 
 type PropsType = {
   todolistId: string;
@@ -80,8 +80,8 @@ export const Todolist = React.memo((props: PropsType) => {
       <AddItemForm callBack={addTaskHandler} />
       <div>
         {
-          /* tasksForTodolist?.map(el => {*/
-          tasksForTodolist.map((el) => {
+          /*tasksForTodolist?.map((el) => {*/
+          tasksForTodolist?.map((el) => {
             return (
               <Task
                 removeTask={props.removeTask}
