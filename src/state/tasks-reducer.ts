@@ -4,7 +4,7 @@ import { AppRootStateType } from "../app/store";
 import { TodolistActionsType } from "./todolists-reducer.type";
 import { TasksStateType } from "../app/App";
 import { TasksActionsType } from "./tasks-reducer.type";
-import { setAppStatusAC } from "./app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
 import { AppActionsType } from "./app-reducer.type";
 
 //при использовании редакса обязательно использовать инициализационный стейт, закидываем в редюсер как
@@ -132,9 +132,19 @@ export const addTaskTC =
   (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {
     dispatch(setAppStatusAC("loading"));
     taskAPI.createTask(todolistId, newTaskTitle).then((res) => {
-      dispatch(addTaskAC(res.data.data.item));
+      if (!res.data.resultCode) {
+        dispatch(addTaskAC(res.data.data.item));
+      } else if (res.data.messages.length) {
+        dispatch(setAppErrorAC(res.data.messages[0]))
+      } else {
+        dispatch(setAppErrorAC('Some error occured'))
+      }
+    }).catch((error)=>{
+
+    }).finally(()=>{
       dispatch(setAppStatusAC("succeeded"));
-    });
+    })
+    ;
   };
 
 export const changeTaskStatusTC =

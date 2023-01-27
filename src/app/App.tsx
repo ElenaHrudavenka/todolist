@@ -6,6 +6,7 @@ import { TaskType } from "../api/todolist-api";
 import TodolistsList from "../features/TodolistsList/TodolistsList";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { Login } from "../features/Login/Login";
+import ErrorSnackbar from "../components/ErrorSnackbar/ErrorSnackbar";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -15,6 +16,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <ErrorSnackbar/>
         <ButtonAppBar />
         <Container fixed>
           <Routes>
