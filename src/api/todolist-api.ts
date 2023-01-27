@@ -62,6 +62,25 @@ type GetTasksResponseType = {
   totalCount: number;
   items: TaskType[];
 };
+// LoginParamsType
+type LoginRequestType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha: string;
+};
+enum resultCode {
+  "OK",
+  "request is invalid",
+  "request is invalid and captcha is required" = 10,
+}
+type LoginResponseType = {
+  resultCode: resultCode;
+  messages: [];
+  data: {
+    userId: number;
+  };
+};
 
 //инкапсулируем логику запросов
 export const todolistAPI = {
@@ -104,5 +123,11 @@ export const taskAPI = {
   },
   getTasks(todolistId: string) {
     return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`);
+  },
+};
+
+export const authAPI = {
+  login() {
+    return instance.post<LoginRequestType>("/auth/login");
   },
 };
