@@ -5,7 +5,7 @@ import {
   TodolistActionsType,
   TodolistDomainType,
 } from "./todolists-reducer.type";
-import { setAppStatusAC } from "./app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
 import { AppActionsType } from "./app-reducer.type";
 
 const initialState: Array<TodolistDomainType> = [];
@@ -67,7 +67,10 @@ export const fetchTodosTC =
     dispatch(setAppStatusAC("loading"));
     todolistAPI.getTodolists().then((res) => {
       dispatch(setTodolistsAC(res.data));
-      dispatch(setAppStatusAC("succeeded"));
+    }).catch((error)=>{
+        dispatch(setAppErrorAC(error.message))
+    }).finally(()=>{
+        dispatch(setAppStatusAC("succeeded"));
     });
   };
 
