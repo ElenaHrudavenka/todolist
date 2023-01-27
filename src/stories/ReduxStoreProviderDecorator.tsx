@@ -4,6 +4,8 @@ import { combineReducers, createStore } from "redux";
 import { tasksReducer } from "../state/tasks-reducer";
 import { todolistsReducer } from "../state/todolists-reducer";
 import { v1 } from "uuid";
+import { appReducer } from "../state/app-reducer";
+import { RequestStatusType } from "../state/app-reducer.type";
 
 /* этого достаточно для отображения компоненты без инициализационного стейта, но это не наглядно
 export const ReduxStoreProviderDecorator = (storyFn: any) => {
@@ -13,6 +15,7 @@ export const ReduxStoreProviderDecorator = (storyFn: any) => {
 const rootReducer = combineReducers({
   tasks: tasksReducer,
   todolists: todolistsReducer,
+  app: appReducer,
 });
 
 const initialGlobalState = {
@@ -85,6 +88,10 @@ const initialGlobalState = {
         deadline: "",
       },
     ],
+  },
+  app: {
+    status: "idle" as RequestStatusType,
+    error: null,
   },
 };
 

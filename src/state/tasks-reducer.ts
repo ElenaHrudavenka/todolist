@@ -4,6 +4,8 @@ import { AppRootStateType } from "../app/store";
 import { TodolistActionsType } from "./todolists-reducer.type";
 import { TasksStateType } from "../app/App";
 import { TasksActionsType } from "./tasks-reducer.type";
+import { setAppStatusAC } from "./app-reducer";
+import { AppActionsType } from "./app-reducer.type";
 
 //при использовании редакса обязательно использовать инициализационный стейт, закидываем в редюсер как
 //параметр по умолчанию для стейта
@@ -105,31 +107,42 @@ export const setTasksAC = (todolistId: string, items: Array<TaskType>) => {
 };
 
 export const fetchTasksTC = (todolistId: string) => {
-  return (dispatch: Dispatch<TasksActionsType>) => {
+  return (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {
+    dispatch(setAppStatusAC("loading"));
     taskAPI.getTasks(todolistId).then((res) => {
       let items = res.data.items;
       dispatch(setTasksAC(todolistId, items));
+      dispatch(setAppStatusAC("succeeded"));
     });
   };
 };
 
 export const removeTaskTC =
-  (taskId: string, todolistId: string) => (dispatch: Dispatch<TasksActionsType>) => {
+  (taskId: string, todolistId: string) =>
+  (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {
+    dispatch(setAppStatusAC("succeeded"));
     taskAPI.removeTask(todolistId, taskId).then((res) => {
       dispatch(removeTaskAC(taskId, todolistId));
+      dispatch(setAppStatusAC("succeeded"));
     });
   };
 
 export const addTaskTC =
-  (newTaskTitle: string, todolistId: string) => (dispatch: Dispatch<TasksActionsType>) => {
+  (newTaskTitle: string, todolistId: string) =>
+  (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {
+    dispatch(setAppStatusAC("loading"));
     taskAPI.createTask(todolistId, newTaskTitle).then((res) => {
       dispatch(addTaskAC(res.data.data.item));
+      dispatch(setAppStatusAC("succeeded"));
     });
   };
 
 export const changeTaskStatusTC =
   (todolistId: string, status: number, taskId: string) =>
-  (dispatch: Dispatch<TasksActionsType>, getState: () => AppRootStateType) => {
+  (
+    dispatch: Dispatch<TasksActionsType | AppActionsType>,
+    getState: () => AppRootStateType
+  ) => {
     const state = getState();
     const tasksForCurrentTodolist = state.tasks[todolistId];
     const currentTask = tasksForCurrentTodolist.find((el) => {
@@ -146,15 +159,20 @@ export const changeTaskStatusTC =
         startDate: currentTask.startDate,
         deadline: currentTask.deadline,
       };
+      dispatch(setAppStatusAC("loading"));
       taskAPI.updateTask(todolistId, taskId, model).then((res) => {
         dispatch(changeTaskStatusAC(taskId, status, todolistId));
+        dispatch(setAppStatusAC("succeeded"));
       });
     }
   };
 
 export const changeTaskTitleTC =
   (taskId: string, title: string, todolistId: string) =>
-  (dispatch: Dispatch<TasksActionsType>, getState: () => AppRootStateType) => {
+  (
+    dispatch: Dispatch<TasksActionsType | AppActionsType>,
+    getState: () => AppRootStateType
+  ) => {
     const state = getState();
     const tasksForCurrentTodolist = state.tasks[todolistId];
     const currentTask = tasksForCurrentTodolist.find((el) => {
@@ -170,8 +188,10 @@ export const changeTaskTitleTC =
         startDate: currentTask.startDate,
         deadline: currentTask.deadline,
       };
+      dispatch(setAppStatusAC("loading"));
       taskAPI.updateTask(todolistId, taskId, model).then((res) => {
         dispatch(changeTaskTitleAC(taskId, model.title, todolistId));
+        dispatch(setAppStatusAC("succeeded"));
       });
     }
   };
