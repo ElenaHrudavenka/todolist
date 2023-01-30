@@ -3,7 +3,7 @@ import {
   CommonResponseType,
   DataType,
   GetTasksResponseType,
-  LoginRequestType,
+  LoginRequestType, LoginResponseType,
   TaskType,
   TodolistType,
   UpdateTaskModelType,
@@ -21,7 +21,7 @@ const instance = axios.create({
 //инкапсулируем логику запросов
 export const todolistAPI = {
   getTodolists() {
-    return instance.get<Array<TodolistType>>("todo-lists");
+    return instance.get<Array<TodolistType>>('todo-lists');
   },
   createTodolist(title: string) {
     return instance.post<
@@ -63,7 +63,7 @@ export const taskAPI = {
 };
 
 export const authAPI = {
-  login() {
-    return instance.post<LoginRequestType>("/auth/login");
+  login(data: LoginRequestType) {
+    return instance.post<CommonResponseType<LoginResponseType>>('/auth/login', data);
   },
 };
