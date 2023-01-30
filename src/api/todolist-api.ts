@@ -1,4 +1,13 @@
 import axios, { AxiosResponse } from "axios";
+import {
+  CommonResponseType,
+  DataType,
+  GetTasksResponseType,
+  LoginRequestType,
+  TaskType,
+  TodolistType,
+  UpdateTaskModelType,
+} from "./todolist-api.type";
 
 //withCredentials определяет, должны ли межсайтовые (кроссдоменные) запросы выполняться с использованием учетных данных (cookie)
 const instance = axios.create({
@@ -8,79 +17,6 @@ const instance = axios.create({
     "API-KEY": "5790b250-3285-44f0-a95a-83b5d2dd95b5",
   },
 });
-
-type CommonResponseType<T = {}> = {
-  resultCode: number;
-  fieldsErrors: string[];
-  messages: string[];
-  data: T;
-};
-export type TodolistType = {
-  id: string;
-  title: string;
-  addedDate: string;
-  order: number;
-};
-export enum TaskStatuses {
-  New,
-  InProgress,
-  Completed,
-  Draft,
-}
-export enum TaskPriorities {
-  Low,
-  Middle,
-  Hi,
-  Urgently,
-  later,
-}
-export type TaskType = {
-  id: string;
-  title: string;
-  description: string;
-  todoListId: string;
-  order: number;
-  status: TaskStatuses;
-  priority: TaskPriorities;
-  startDate: string;
-  addedDate: string;
-  deadline: string;
-};
-export type UpdateTaskModelType = {
-  title: string;
-  description: string;
-  status: number;
-  priority: number;
-  startDate: string;
-  deadline: string;
-};
-type DataType = {
-  item: TaskType;
-};
-type GetTasksResponseType = {
-  error: string | null;
-  totalCount: number;
-  items: TaskType[];
-};
-// LoginParamsType
-type LoginRequestType = {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-  captcha: string;
-};
-enum resultCode {
-  "OK",
-  "request is invalid",
-  "request is invalid and captcha is required" = 10,
-}
-type LoginResponseType = {
-  resultCode: resultCode;
-  messages: [];
-  data: {
-    userId: number;
-  };
-};
 
 //инкапсулируем логику запросов
 export const todolistAPI = {
