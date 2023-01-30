@@ -56,7 +56,7 @@ export type LoginRequestType = {
   email: string;
   password: string;
   rememberMe: boolean;
-  captcha: string;
+  captcha: boolean;
 };
 export enum resultCode {
   "OK",
