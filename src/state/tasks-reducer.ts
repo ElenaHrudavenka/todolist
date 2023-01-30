@@ -1,12 +1,17 @@
-import { taskAPI, TaskType } from "../api/todolist-api";
+import { taskAPI } from "../api/todolist-api";
 import { Dispatch } from "redux";
 import { AppRootStateType } from "../app/store";
 import { TodolistActionsType } from "./todolists-reducer.type";
 import { TasksStateType } from "../app/App";
 import { TasksActionsType } from "./tasks-reducer.type";
-import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
+import { setAppStatusAC } from "./app-reducer";
 import { AppActionsType } from "./app-reducer.type";
-import {changeTodolistEntityStatusAC} from "./todolists-reducer";
+import { changeTodolistEntityStatusAC } from "./todolists-reducer";
+import {
+  handleServerAppError,
+  handleServerNetworkError,
+} from "../utils/error-utils";
+import { TaskType } from "../api/todolist-api.type";
 
 //при использовании редакса обязательно использовать инициализационный стейт, закидываем в редюсер как
 //параметр по умолчанию для стейта
@@ -110,11 +115,16 @@ export const setTasksAC = (todolistId: string, items: Array<TaskType>) => {
 export const fetchTasksTC = (todolistId: string) => {
   return (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {
     dispatch(setAppStatusAC("loading"));
-    taskAPI.getTasks(todolistId).then((res) => {
-      let items = res.data.items;
-      dispatch(setTasksAC(todolistId, items));
-      dispatch(setAppStatusAC("succeeded"));
-    });
+    taskAPI
+      .getTasks(todolistId)
+      .then((res) => {
+        let items = res.data.items;
+        dispatch(setTasksAC(todolistId, items));
+        dispatch(setAppStatusAC("succeeded"));
+      })
+      .catch((error) => {
+        handleServerNetworkError(error.message, dispatch);
+      });
   };
 };
 
@@ -122,33 +132,37 @@ export const removeTaskTC =
   (taskId: string, todolistId: string) =>
   (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {
     dispatch(setAppStatusAC("succeeded"));
-    taskAPI.removeTask(todolistId, taskId).then((res) => {
-      dispatch(removeTaskAC(taskId, todolistId));
-      dispatch(setAppStatusAC("succeeded"));
-    });
+    taskAPI
+      .removeTask(todolistId, taskId)
+      .then((res) => {
+        dispatch(removeTaskAC(taskId, todolistId));
+        dispatch(setAppStatusAC("succeeded"));
+      })
+      .catch((error) => {
+        handleServerNetworkError(error.message, dispatch);
+      });
   };
 
 export const addTaskTC =
   (newTaskTitle: string, todolistId: string) =>
-  (dispatch: Dispatch<TasksActionsType | AppActionsType | TodolistActionsType>) => {
+  (
+    dispatch: Dispatch<TasksActionsType | AppActionsType | TodolistActionsType>
+  ) => {
     dispatch(setAppStatusAC("loading"));
     dispatch(changeTodolistEntityStatusAC(todolistId, "loading"));
-    taskAPI.createTask(todolistId, newTaskTitle).then((res) => {
-      if (!res.data.resultCode) {
-        dispatch(addTaskAC(res.data.data.item));
-      } else if (res.data.messages.length) {
-        dispatch(setAppErrorAC(res.data.messages[0]))
-      } else {
-        dispatch(setAppErrorAC('Some error occured'))
-      }
-    }).catch((error)=>{
-      dispatch(setAppStatusAC('failed'));
-      dispatch(setAppErrorAC(error.message))
-    }).finally(()=>{
-      dispatch(setAppStatusAC("succeeded"));
-      dispatch(changeTodolistEntityStatusAC(todolistId, "succeeded"));
-    })
-    ;
+    taskAPI
+      .createTask(todolistId, newTaskTitle)
+      .then((res) => {
+        if (res.data.resultCode===0) {
+          dispatch(addTaskAC(res.data.data.item));
+          dispatch(setAppStatusAC("succeeded"));
+        } else {
+          handleServerAppError(res.data, dispatch);
+        }
+      })
+      .catch((error) => {
+        handleServerNetworkError(error.message, dispatch);
+      });
   };
 
 export const changeTaskStatusTC =
@@ -174,10 +188,15 @@ export const changeTaskStatusTC =
         deadline: currentTask.deadline,
       };
       dispatch(setAppStatusAC("loading"));
-      taskAPI.updateTask(todolistId, taskId, model).then((res) => {
-        dispatch(changeTaskStatusAC(taskId, status, todolistId));
-        dispatch(setAppStatusAC("succeeded"));
-      });
+      taskAPI
+        .updateTask(todolistId, taskId, model)
+        .then((res) => {
+          dispatch(changeTaskStatusAC(taskId, status, todolistId));
+          dispatch(setAppStatusAC("succeeded"));
+        })
+        .catch((error) => {
+          handleServerNetworkError(error.message, dispatch);
+        });
     }
   };
 
@@ -203,19 +222,18 @@ export const changeTaskTitleTC =
         deadline: currentTask.deadline,
       };
       dispatch(setAppStatusAC("loading"));
-      taskAPI.updateTask(todolistId, taskId, model).then((res) => {
-        if (!res.data.resultCode) {
-          dispatch(changeTaskTitleAC(taskId, model.title, todolistId));
-          dispatch(setAppStatusAC("succeeded"));
-        } else if (res.data.messages.length) {
-          dispatch(setAppErrorAC(res.data.messages[0]))
-        } else {
-          dispatch(setAppErrorAC('Some error occurred'))
-        }
-        dispatch(setAppStatusAC("failed"));
-      }).catch((error) => {
-        dispatch(setAppStatusAC('failed'));
-        dispatch(setAppErrorAC(error.message))
-      });
+      taskAPI
+        .updateTask(todolistId, taskId, model)
+        .then((res) => {
+          if (!res.data.resultCode) {
+            dispatch(changeTaskTitleAC(taskId, model.title, todolistId));
+            dispatch(setAppStatusAC("succeeded"));
+          } else {
+            handleServerAppError(res.data, dispatch);
+          }
+        })
+        .catch((error) => {
+          handleServerNetworkError(error.message, dispatch);
+        });
     }
-};
+  };

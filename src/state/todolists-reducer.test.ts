@@ -23,7 +23,7 @@ beforeEach(() => {
       filter: "all",
       addedDate: "",
       order: 0,
-      entityStatus: 'succeeded',
+      entityStatus: "succeeded",
     },
     {
       id: todolistId2,
@@ -31,7 +31,7 @@ beforeEach(() => {
       filter: "all",
       addedDate: "",
       order: 0,
-      entityStatus: 'succeeded',
+      entityStatus: "succeeded",
     },
   ];
 });

@@ -116,7 +116,7 @@ const TodolistsList = () => {
   return (
     <>
       <Grid container style={{ padding: "20px" }}>
-        <AddItemForm callBack={addTodolist}/>
+        <AddItemForm callBack={addTodolist} />
       </Grid>
       <Grid container spacing={3}>
         {todolists.map((el, index) => {

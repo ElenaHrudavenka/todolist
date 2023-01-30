@@ -1,4 +1,4 @@
-import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
+import { setAppErrorAC, setAppStatusAC } from "./app-reducer";
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
 export type AppStateType = {
@@ -7,5 +7,5 @@ export type AppStateType = {
 };
 
 export type AppActionsType =
-    | ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof setAppErrorAC>;
+  | ReturnType<typeof setAppStatusAC>
+  | ReturnType<typeof setAppErrorAC>;

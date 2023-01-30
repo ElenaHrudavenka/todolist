@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { taskAPI, todolistAPI, UpdateTaskModelType } from "../api/todolist-api";
+import { taskAPI, todolistAPI } from "../api/todolist-api";
+import { UpdateTaskModelType } from "../api/todolist-api.type";
 
 export default {
   title: "API",

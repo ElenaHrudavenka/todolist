@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { authAPI } from "../api/todolist-api";
 import { setAppStatusAC } from "./app-reducer";
 import { AppActionsType } from "./app-reducer.type";
+import { handleServerNetworkError } from "../utils/error-utils";
 
 const initialState = {
   isLoggedIn: false,
@@ -26,8 +27,13 @@ export const setIsLoggedInAC = (value: boolean) =>
 export const setIsLoggedInTC =
   (data: any) => (dispatch: Dispatch<AuthActionsTypes | AppActionsType>) => {
     dispatch(setAppStatusAC("loading"));
-    authAPI.login().then((res) => {
-      dispatch(setIsLoggedInAC(true));
-      dispatch(setAppStatusAC("succeeded"));
-    });
+    authAPI
+      .login()
+      .then((res) => {
+        dispatch(setIsLoggedInAC(true));
+        dispatch(setAppStatusAC("succeeded"));
+      })
+      .catch((error) => {
+        handleServerNetworkError(error.message, dispatch);
+      });
   };

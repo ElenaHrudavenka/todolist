@@ -1,12 +1,13 @@
-import { TodolistType } from "../api/todolist-api";
 import { RequestStatusType } from "./app-reducer.type";
 import {
-  addTodolistAC, changeTodolistEntityStatusAC,
+  addTodolistAC,
+  changeTodolistEntityStatusAC,
   changeTodolistFilterAC,
   changeTodolistTitleAC,
   removeTodolistAC,
   setTodolistsAC,
 } from "./todolists-reducer";
+import {TodolistType} from "../api/todolist-api.type";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistDomainType = TodolistType & {
@@ -24,4 +25,4 @@ export type TodolistActionsType =
   | ReturnType<typeof changeTodolistTitleAC>
   | ReturnType<typeof changeTodolistFilterAC>
   | setTodolistsActionType
-    |ReturnType<typeof changeTodolistEntityStatusAC>;
+  | ReturnType<typeof changeTodolistEntityStatusAC>;

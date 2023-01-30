@@ -2,11 +2,11 @@ import React from "react";
 import "./App.css";
 import { Container } from "@material-ui/core";
 import ButtonAppBar from "../components/ButtonAppBar";
-import { TaskType } from "../api/todolist-api";
 import TodolistsList from "../features/TodolistsList/TodolistsList";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { Login } from "../features/Login/Login";
 import ErrorSnackbar from "../components/ErrorSnackbar/ErrorSnackbar";
+import {TaskType} from "../api/todolist-api.type";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <ErrorSnackbar/>
+        <ErrorSnackbar />
         <ButtonAppBar />
         <Container fixed>
           <Routes>
