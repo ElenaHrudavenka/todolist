@@ -6,6 +6,7 @@ import { TasksStateType } from "../app/App";
 import { TasksActionsType } from "./tasks-reducer.type";
 import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
 import { AppActionsType } from "./app-reducer.type";
+import {changeTodolistEntityStatusAC} from "./todolists-reducer";
 
 //при использовании редакса обязательно использовать инициализационный стейт, закидываем в редюсер как
 //параметр по умолчанию для стейта
@@ -129,8 +130,9 @@ export const removeTaskTC =
 
 export const addTaskTC =
   (newTaskTitle: string, todolistId: string) =>
-  (dispatch: Dispatch<TasksActionsType | AppActionsType>) => {
+  (dispatch: Dispatch<TasksActionsType | AppActionsType | TodolistActionsType>) => {
     dispatch(setAppStatusAC("loading"));
+    dispatch(changeTodolistEntityStatusAC(todolistId, "loading"));
     taskAPI.createTask(todolistId, newTaskTitle).then((res) => {
       if (!res.data.resultCode) {
         dispatch(addTaskAC(res.data.data.item));
@@ -140,9 +142,11 @@ export const addTaskTC =
         dispatch(setAppErrorAC('Some error occured'))
       }
     }).catch((error)=>{
-
+      dispatch(setAppStatusAC('failed'));
+      dispatch(setAppErrorAC(error.message))
     }).finally(()=>{
       dispatch(setAppStatusAC("succeeded"));
+      dispatch(changeTodolistEntityStatusAC(todolistId, "succeeded"));
     })
     ;
   };
@@ -200,8 +204,18 @@ export const changeTaskTitleTC =
       };
       dispatch(setAppStatusAC("loading"));
       taskAPI.updateTask(todolistId, taskId, model).then((res) => {
-        dispatch(changeTaskTitleAC(taskId, model.title, todolistId));
-        dispatch(setAppStatusAC("succeeded"));
+        if (!res.data.resultCode) {
+          dispatch(changeTaskTitleAC(taskId, model.title, todolistId));
+          dispatch(setAppStatusAC("succeeded"));
+        } else if (res.data.messages.length) {
+          dispatch(setAppErrorAC(res.data.messages[0]))
+        } else {
+          dispatch(setAppErrorAC('Some error occurred'))
+        }
+        dispatch(setAppStatusAC("failed"));
+      }).catch((error) => {
+        dispatch(setAppStatusAC('failed'));
+        dispatch(setAppErrorAC(error.message))
       });
     }
-  };
+};

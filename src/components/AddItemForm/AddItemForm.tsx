@@ -1,9 +1,10 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
-import { Button, IconButton, TextField } from "@material-ui/core";
+import { IconButton, TextField } from "@material-ui/core";
 import { AddBox } from "@material-ui/icons";
 
 type AddItemTypes = {
   callBack: (title: string) => void;
+  disabled?: boolean;
 };
 
 //const AddItemForm = (props: AddItemTypes) => {
@@ -58,7 +59,7 @@ export const AddItemForm = React.memo((props: AddItemTypes) => {
                    className={error ? "error" : ""}
             />*/}
       {/*<Button onClick={addTask} variant="contained" style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}>+</Button>*/}
-      <IconButton onClick={addTask} color="primary">
+      <IconButton onClick={addTask} color="primary" disabled={pr.disabled}>
         <AddBox />
       </IconButton>
       {/* {error && <div className="error-message">{error}</div>}*/}

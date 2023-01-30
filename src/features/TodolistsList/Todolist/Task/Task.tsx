@@ -42,7 +42,7 @@ export const Task = React.memo((props: TaskPropsType) => {
         onChange={onChangeStatusHandler}
         color="primary"
       />
-      <EditableSpan title={props.task.title} onChange={onChangeTitleHandler} />
+      <EditableSpan title={props.task.title} onChange={onChangeTitleHandler}/>
       <IconButton aria-label="delete" onClick={onClickHandler}>
         <Delete />
       </IconButton>

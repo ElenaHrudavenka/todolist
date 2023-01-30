@@ -26,6 +26,7 @@ const initialGlobalState = {
       filter: "all",
       addedDate: "",
       order: 0,
+      entityStatus: 'succeeded',
     },
     {
       id: "todolistId2",
@@ -33,6 +34,7 @@ const initialGlobalState = {
       filter: "all",
       addedDate: "",
       order: 0,
+      entityStatus: 'succeeded',
     },
   ],
   tasks: {
