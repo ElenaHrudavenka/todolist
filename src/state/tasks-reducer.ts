@@ -156,6 +156,7 @@ export const addTaskTC =
         if (res.data.resultCode===0) {
           dispatch(addTaskAC(res.data.data.item));
           dispatch(setAppStatusAC("succeeded"));
+          dispatch(changeTodolistEntityStatusAC(todolistId, "succeeded"));
         } else {
           handleServerAppError(res.data, dispatch);
         }

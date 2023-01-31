@@ -1,6 +1,6 @@
 export type CommonResponseType<T = {}> = {
   resultCode: number;
-  fieldsErrors: string[];
+  fieldsErrors?: string[];
   messages: string[];
   data: T;
 };
@@ -63,10 +63,19 @@ export enum resultCode {
   "request is invalid",
   "request is invalid and captcha is required" = 10,
 }
-export type LoginResponseType = {
+/*export type LoginResponseType = {
   resultCode: resultCode;
   messages: [];
   data: {
     userId: number;
   };
+};*/
+export type LoginResponseDataType = {
+    userId: number;
 };
+
+export type AuthMeResponseDataType = {
+    id: number,
+    email: string,
+    login: string,
+}
