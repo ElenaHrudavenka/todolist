@@ -1,47 +1,38 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   AppBar,
   Box,
   Toolbar,
   Button,
   LinearProgress,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import { IconButton, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RequestStatusType } from "../state/app-reducer.type";
-import { AppRootStateType } from "../app/store";
+} from '@material-ui/core';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import { Typography } from '@mui/material';
+import { RequestStatusType } from '../state/app-reducer.type';
 
 type ButtonAppBarPropsType = {
-  logoutHandler: ()=>void
-}
+  logoutHandler: () => void;
+  status: RequestStatusType;
+  isLoggedIn: boolean;
+};
 const ButtonAppBar = (props: ButtonAppBarPropsType) => {
-  const status = useSelector<AppRootStateType, RequestStatusType>(
-    (state) => state.app.status
-  );
-  const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+          <ListAltIcon />
+          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+            To-do lists
           </Typography>
-          {isLoggedIn && <Button color="inherit" onClick={props.logoutHandler}>Logout</Button>}
+          {props.isLoggedIn && (
+            <Button color='inherit' onClick={props.logoutHandler}>
+              Logout
+            </Button>
+          )}
         </Toolbar>
-        {status === "loading" && <LinearProgress />}
+        {props.status === 'loading' && <LinearProgress />}
       </AppBar>
     </Box>
   );
-}
+};
 export default ButtonAppBar;

@@ -59,9 +59,9 @@ export type LoginRequestType = {
   captcha: boolean;
 };
 export enum resultCode {
-  "OK",
-  "request is invalid",
-  "request is invalid and captcha is required" = 10,
+  'OK',
+  'request is invalid',
+  'request is invalid and captcha is required' = 10,
 }
 /*export type LoginResponseType = {
   resultCode: resultCode;
@@ -71,11 +71,11 @@ export enum resultCode {
   };
 };*/
 export type LoginResponseDataType = {
-    userId: number;
+  userId: number;
 };
 
 export type AuthMeResponseDataType = {
-    id: number,
-    email: string,
-    login: string,
-}
+  id: number;
+  email: string;
+  login: string;
+};

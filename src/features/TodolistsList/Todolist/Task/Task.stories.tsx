@@ -1,15 +1,15 @@
-import { Task } from "./Task";
-import { action } from "@storybook/addon-actions";
-import React from "react";
+import { Task } from './Task';
+import { action } from '@storybook/addon-actions';
+import React from 'react';
 
 export default {
-  title: "Task Component",
+  title: 'Task Component',
   component: Task,
 };
 
-const removeTaskCallBack = action("Task removed");
-const changeTaskStatusCallBack = action("Status changed");
-const changeSpanTitleCallBack = action("Span title changed");
+const removeTaskCallBack = action('Task removed');
+const changeTaskStatusCallBack = action('Status changed');
+const changeSpanTitleCallBack = action('Span title changed');
 
 export const TaskBaseExample = () => {
   return (
@@ -19,38 +19,38 @@ export const TaskBaseExample = () => {
         changeTaskStatus={changeTaskStatusCallBack}
         changeSpanTitle={changeSpanTitleCallBack}
         task={{
-          id: "1",
-          title: "CSS",
+          id: '1',
+          title: 'CSS',
           status: 2,
-          description: "",
-          todoListId: "lllllllllll",
+          description: '',
+          todoListId: 'lllllllllll',
           order: 0,
           priority: 0,
-          startDate: "",
-          addedDate: "",
-          deadline: "",
+          startDate: '',
+          addedDate: '',
+          deadline: '',
         }}
-        todolistId={"todolistId1"}
-        key={"1"}
+        todolistId={'todolistId1'}
+        key={'1'}
       />
       <Task
         removeTask={removeTaskCallBack}
         changeTaskStatus={changeTaskStatusCallBack}
         changeSpanTitle={changeSpanTitleCallBack}
         task={{
-          id: "2",
-          title: "React",
+          id: '2',
+          title: 'React',
           status: 0,
-          description: "",
-          todoListId: "hhhhhhhhh",
+          description: '',
+          todoListId: 'hhhhhhhhh',
           order: 0,
           priority: 0,
-          startDate: "",
-          addedDate: "",
-          deadline: "",
+          startDate: '',
+          addedDate: '',
+          deadline: '',
         }}
-        todolistId={"todolistId2"}
-        key={"2"}
+        todolistId={'todolistId2'}
+        key={'2'}
       />
     </>
   );

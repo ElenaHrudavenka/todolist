@@ -4,7 +4,7 @@ import {
   changeTaskTitleAC,
   removeTaskAC,
   setTasksAC,
-} from "./tasks-reducer";
+} from './tasks-reducer';
 
 //юнион тип
 export type TasksActionsType =

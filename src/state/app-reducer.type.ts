@@ -1,6 +1,6 @@
-import {setAppErrorAC, setAppStatusAC, setAuthMeAC} from "./app-reducer";
+import { setAppErrorAC, setAppStatusAC, setAuthMeAC } from './app-reducer';
 
-export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 export type AppStateType = {
   status: RequestStatusType;
   error: string | null;
@@ -10,4 +10,4 @@ export type AppStateType = {
 export type AppActionsType =
   | ReturnType<typeof setAppStatusAC>
   | ReturnType<typeof setAppErrorAC>
-    |ReturnType<typeof setAuthMeAC>;
+  | ReturnType<typeof setAuthMeAC>;

@@ -1,30 +1,30 @@
-import React, { useCallback, useEffect } from "react";
-import { Grid, Paper } from "@material-ui/core";
-import { AddItemForm } from "../../components/AddItemForm/AddItemForm";
-import { Todolist } from "./Todolist/Todolist";
+import React, { useCallback, useEffect } from 'react';
+import { Grid, Paper } from '@material-ui/core';
+import { AddItemForm } from '../../components/AddItemForm/AddItemForm';
+import { Todolist } from './Todolist/Todolist';
 import {
   changeTodolistFilterAC,
   changeTodolistTitleTC,
   createTodolistTC,
   fetchTodosTC,
   removeTodolistTC,
-} from "../../state/todolists-reducer";
-import { useDispatch, useSelector } from "react-redux";
+} from '../../state/todolists-reducer';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addTaskTC,
   changeTaskStatusTC,
   changeTaskTitleTC,
   removeTaskTC,
-} from "../../state/tasks-reducer";
+} from '../../state/tasks-reducer';
 import {
   FilterValuesType,
   TodolistDomainType,
-} from "../../state/todolists-reducer.type";
-import { AppRootStateType } from "../../app/store";
-import { TasksStateType } from "../../app/App";
-import {Navigate} from "react-router-dom";
+} from '../../state/todolists-reducer.type';
+import { AppRootStateType } from '../../app/store';
+import { TasksStateType } from '../../app/App';
+import { Navigate } from 'react-router-dom';
 
-const TodolistsList = () => {
+export const TodolistsList = React.memo(() => {
   const dispatch = useDispatch(); //т.к.редюсеры сработают все, то нам нужен только один диспач
   /*  let todolistId1 = v1();
         let todolistId2 = v1();
@@ -50,9 +50,9 @@ const TodolistsList = () => {
                 ]
             });*/
   useEffect(() => {
-      if (/*demo ||*/ !isLoggedIn ) {
-          return;
-      }
+    if (!isLoggedIn) {
+      return;
+    }
     dispatch(fetchTodosTC());
   }, [dispatch]);
   // AppRootStateType тип нашего стейта и должен возвратиться массив TasksStateType
@@ -62,69 +62,63 @@ const TodolistsList = () => {
   const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(
     (state) => state.todolists
   );
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(
-        (state)=>state.auth.isLoggedIn
-    );
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(
+    (state) => state.auth.isLoggedIn
+  );
   /*  Почему не стоит получать весь стейт. По сути мы подписываемся на изменения всего стейта, и при любом изменении в
           стейте компоненты будут перерисовываться, даже если это не нужно,
           т.е. нужно для каждого отдельного свойства стейта доставать его через свой useSelector, избежим ненужных перерисовок
           Можно сделать с деструктуризацией (хороший способ)
           const {tasks, todolists} = useSelector<AppRootStateType, AppRootStateType>(state => state)
           */
-  const addTodolist = useCallback(
-    (newTitle: string) => {
-      dispatch(createTodolistTC(newTitle));
-    },
-    [dispatch]
-  );
-  const removeTodo = useCallback(
-    function (todolistId: string) {
-      dispatch(removeTodolistTC(todolistId));
-    },
-    [dispatch]
-  );
-  const changeTodoTitle = useCallback(
-    function (todolistID: string, title: string) {
-      dispatch(changeTodolistTitleTC(todolistID, title));
-    },
-    [dispatch]
-  );
-  const removeTask = useCallback(
-    function (todolistId: string, id: string) {
-      dispatch(removeTaskTC(id, todolistId));
-    },
-    [dispatch]
-  );
-  const addTask = useCallback(
-    function (todolistId: string, title: string) {
-      dispatch(addTaskTC(title, todolistId));
-    },
-    [dispatch]
-  );
-  const changeStatus = useCallback(
-    function (todolistID: string, taskId: string, status: number) {
-      dispatch(changeTaskStatusTC(todolistID, status, taskId));
-    },
-    [dispatch]
-  );
-  const changeSpanTitle = useCallback(
-    function (todolistId: string, taskId: string, title: string) {
-      dispatch(changeTaskTitleTC(taskId, title, todolistId));
-    },
-    [dispatch]
-  );
-  const changeFilter = useCallback(
-    function (todolistId: string, newTodolistFilter: FilterValuesType) {
-      dispatch(changeTodolistFilterAC(todolistId, newTodolistFilter));
-    },
-    [dispatch]
-  );
-    if (!isLoggedIn) {
-        return <Navigate to={'/login'}/>
-    }
+  const addTodolist = useCallback((newTitle: string) => {
+    dispatch(createTodolistTC(newTitle));
+  }, []);
+  const removeTodo = useCallback(function (todolistId: string) {
+    dispatch(removeTodolistTC(todolistId));
+  }, []);
+  const changeTodoTitle = useCallback(function (
+    todolistID: string,
+    title: string
+  ) {
+    dispatch(changeTodolistTitleTC(todolistID, title));
+  },
+  []);
+  const removeTask = useCallback(function (todolistId: string, id: string) {
+    dispatch(removeTaskTC(id, todolistId));
+  }, []);
+  const addTask = useCallback(function (todolistId: string, title: string) {
+    dispatch(addTaskTC(title, todolistId));
+  }, []);
+  const changeStatus = useCallback(function (
+    todolistID: string,
+    taskId: string,
+    status: number
+  ) {
+    dispatch(changeTaskStatusTC(todolistID, status, taskId));
+  },
+  []);
+  const changeSpanTitle = useCallback(function (
+    todolistId: string,
+    taskId: string,
+    title: string
+  ) {
+    dispatch(changeTaskTitleTC(taskId, title, todolistId));
+  },
+  []);
+  const changeFilter = useCallback(function (
+    todolistId: string,
+    newTodolistFilter: FilterValuesType
+  ) {
+    dispatch(changeTodolistFilterAC(todolistId, newTodolistFilter));
+  },
+  []);
+  if (!isLoggedIn) {
+    return <Navigate to={'/todolist/login'} />;
+  }
   return (
     <>
-      <Grid container style={{ padding: "20px" }}>
+      <Grid container style={{ padding: '20px' }}>
         <AddItemForm callBack={addTodolist} />
       </Grid>
       <Grid container spacing={3}>
@@ -134,7 +128,7 @@ const TodolistsList = () => {
                                     active или completed, то перерисуются все тудулисты */
           return (
             <Grid item key={el.id}>
-              <Paper style={{ padding: "10px" }}>
+              <Paper style={{ padding: '10px' }}>
                 <Todolist
                   todolistId={el.id}
                   title={el.title}
@@ -156,6 +150,4 @@ const TodolistsList = () => {
       </Grid>
     </>
   );
-};
-
-export default TodolistsList;
+});

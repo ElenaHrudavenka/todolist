@@ -1,12 +1,12 @@
-import { Provider } from "react-redux";
-import { AppRootStateType, store } from "../app/store";
-import { combineReducers, createStore } from "redux";
-import { tasksReducer } from "../state/tasks-reducer";
-import { todolistsReducer } from "../state/todolists-reducer";
-import { v1 } from "uuid";
-import { appReducer } from "../state/app-reducer";
-import { RequestStatusType } from "../state/app-reducer.type";
-import {authReducer} from "../state/auth-reducer";
+import { Provider } from 'react-redux';
+import { AppRootStateType, store } from '../app/store';
+import { combineReducers, createStore } from 'redux';
+import { tasksReducer } from '../state/tasks-reducer';
+import { todolistsReducer } from '../state/todolists-reducer';
+import { v1 } from 'uuid';
+import { appReducer } from '../state/app-reducer';
+import { RequestStatusType } from '../state/app-reducer.type';
+import { authReducer } from '../state/auth-reducer';
 
 /* этого достаточно для отображения компоненты без инициализационного стейта, но это не наглядно
 export const ReduxStoreProviderDecorator = (storyFn: any) => {
@@ -23,84 +23,84 @@ const rootReducer = combineReducers({
 const initialGlobalState = {
   todolists: [
     {
-      id: "todolistId1",
-      title: "What to learn",
-      filter: "all",
-      addedDate: "",
+      id: 'todolistId1',
+      title: 'What to learn',
+      filter: 'all',
+      addedDate: '',
       order: 0,
-      entityStatus: "succeeded",
+      entityStatus: 'succeeded',
     },
     {
-      id: "todolistId2",
-      title: "What to buy",
-      filter: "all",
-      addedDate: "",
+      id: 'todolistId2',
+      title: 'What to buy',
+      filter: 'all',
+      addedDate: '',
       order: 0,
-      entityStatus: "succeeded",
+      entityStatus: 'succeeded',
     },
   ],
   tasks: {
-    ["todolistId1"]: [
+    ['todolistId1']: [
       {
         id: v1(),
-        title: "HTML&CSS",
+        title: 'HTML&CSS',
         status: 2,
-        description: "",
-        todoListId: "rrrrrrrrrrrr",
+        description: '',
+        todoListId: 'rrrrrrrrrrrr',
         order: 0,
         priority: 0,
-        startDate: "",
-        addedDate: "",
-        deadline: "",
+        startDate: '',
+        addedDate: '',
+        deadline: '',
       },
       {
         id: v1(),
-        title: "JS",
+        title: 'JS',
         status: 2,
-        description: "",
-        todoListId: "nnnnnnnnnnnn",
+        description: '',
+        todoListId: 'nnnnnnnnnnnn',
         order: 0,
         priority: 0,
-        startDate: "",
-        addedDate: "",
-        deadline: "",
+        startDate: '',
+        addedDate: '',
+        deadline: '',
       },
     ],
-    ["todolistId2"]: [
+    ['todolistId2']: [
       {
         id: v1(),
-        title: "Milk",
+        title: 'Milk',
         status: 2,
-        description: "",
-        todoListId: "eeeeeeeee",
+        description: '',
+        todoListId: 'eeeeeeeee',
         order: 0,
         priority: 0,
-        startDate: "",
-        addedDate: "",
-        deadline: "",
+        startDate: '',
+        addedDate: '',
+        deadline: '',
       },
       {
         id: v1(),
-        title: "React Book",
+        title: 'React Book',
         status: 2,
-        description: "",
-        todoListId: "qqqqqqqqqqq",
+        description: '',
+        todoListId: 'qqqqqqqqqqq',
         order: 0,
         priority: 0,
-        startDate: "",
-        addedDate: "",
-        deadline: "",
+        startDate: '',
+        addedDate: '',
+        deadline: '',
       },
     ],
   },
   app: {
-    status: "idle" as RequestStatusType,
+    status: 'idle' as RequestStatusType,
     error: null,
     isInitialized: true,
   },
   auth: {
     isLoggedIn: true,
-  }
+  },
 };
 
 export const storyBookStore = createStore(
