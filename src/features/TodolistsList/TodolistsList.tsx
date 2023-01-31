@@ -22,6 +22,7 @@ import {
 } from "../../state/todolists-reducer.type";
 import { AppRootStateType } from "../../app/store";
 import { TasksStateType } from "../../app/App";
+import {Navigate} from "react-router-dom";
 
 const TodolistsList = () => {
   const dispatch = useDispatch(); //т.к.редюсеры сработают все, то нам нужен только один диспач
@@ -49,6 +50,9 @@ const TodolistsList = () => {
                 ]
             });*/
   useEffect(() => {
+      if (/*demo ||*/ !isLoggedIn ) {
+          return;
+      }
     dispatch(fetchTodosTC());
   }, [dispatch]);
   // AppRootStateType тип нашего стейта и должен возвратиться массив TasksStateType
@@ -58,6 +62,9 @@ const TodolistsList = () => {
   const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(
     (state) => state.todolists
   );
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(
+        (state)=>state.auth.isLoggedIn
+    );
   /*  Почему не стоит получать весь стейт. По сути мы подписываемся на изменения всего стейта, и при любом изменении в
           стейте компоненты будут перерисовываться, даже если это не нужно,
           т.е. нужно для каждого отдельного свойства стейта доставать его через свой useSelector, избежим ненужных перерисовок
@@ -112,7 +119,9 @@ const TodolistsList = () => {
     },
     [dispatch]
   );
-
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
   return (
     <>
       <Grid container style={{ padding: "20px" }}>

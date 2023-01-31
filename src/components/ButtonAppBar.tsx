@@ -12,10 +12,15 @@ import { useSelector } from "react-redux";
 import { RequestStatusType } from "../state/app-reducer.type";
 import { AppRootStateType } from "../app/store";
 
-export default function ButtonAppBar() {
+type ButtonAppBarPropsType = {
+  logoutHandler: ()=>void
+}
+const ButtonAppBar = (props: ButtonAppBarPropsType) => {
   const status = useSelector<AppRootStateType, RequestStatusType>(
     (state) => state.app.status
   );
+  const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -32,10 +37,11 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
-          <Button color="inherit"> Login </Button>
+          {isLoggedIn && <Button color="inherit" onClick={props.logoutHandler}>Logout</Button>}
         </Toolbar>
         {status === "loading" && <LinearProgress />}
       </AppBar>
     </Box>
   );
 }
+export default ButtonAppBar;
