@@ -1,4 +1,4 @@
-import { RequestStatusType } from "./app-reducer.type";
+import { RequestStatusType } from './app-reducer.type';
 import {
   addTodolistAC,
   changeTodolistEntityStatusAC,
@@ -6,10 +6,10 @@ import {
   changeTodolistTitleAC,
   removeTodolistAC,
   setTodolistsAC,
-} from "./todolists-reducer";
-import {TodolistType} from "../api/todolist-api.type";
+} from './todolists-reducer';
+import { TodolistType } from '../api/todolist-api.type';
 
-export type FilterValuesType = "all" | "active" | "completed";
+export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistDomainType = TodolistType & {
   filter: FilterValuesType;
   entityStatus: RequestStatusType;

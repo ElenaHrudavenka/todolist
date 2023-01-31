@@ -1,15 +1,15 @@
-import { addTodolistAC, todolistsReducer } from "./todolists-reducer";
-import { TasksStateType } from "../app/App";
-import { TodolistDomainType } from "./todolists-reducer.type";
-import { tasksReducer } from "./tasks-reducer";
+import { addTodolistAC, todolistsReducer } from './todolists-reducer';
+import { TasksStateType } from '../app/App';
+import { TodolistDomainType } from './todolists-reducer.type';
+import { tasksReducer } from './tasks-reducer';
 
-test("added todolist", () => {
+test('added todolist', () => {
   const startTasksState: TasksStateType = {};
   const startTodolistState: Array<TodolistDomainType> = [];
   const newTodolist = {
-    id: "QWERTY",
-    title: "New todolist title",
-    addedDate: "",
+    id: 'QWERTY',
+    title: 'New todolist title',
+    addedDate: '',
     order: 0,
   };
   const action = addTodolistAC(newTodolist);

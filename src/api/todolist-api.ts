@@ -1,21 +1,22 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from 'axios';
 import {
   AuthMeResponseDataType,
   CommonResponseType,
   DataType,
   GetTasksResponseType,
-  LoginRequestType, LoginResponseDataType,
+  LoginRequestType,
+  LoginResponseDataType,
   TaskType,
   TodolistType,
   UpdateTaskModelType,
-} from "./todolist-api.type";
+} from './todolist-api.type';
 
 //withCredentials определяет, должны ли межсайтовые (кроссдоменные) запросы выполняться с использованием учетных данных (cookie)
 const instance = axios.create({
-  baseURL: "https://social-network.samuraijs.com/api/1.1/",
+  baseURL: 'https://social-network.samuraijs.com/api/1.1/',
   withCredentials: true,
   headers: {
-    "API-KEY": "9e14477c-0e57-445b-a564-a23e9a10ba71",
+    'API-KEY': '9e14477c-0e57-445b-a564-a23e9a10ba71',
   },
 });
 
@@ -65,10 +66,13 @@ export const taskAPI = {
 
 export const authAPI = {
   login(data: LoginRequestType) {
-    return instance.post<CommonResponseType<LoginResponseDataType>>('/auth/login', data);
+    return instance.post<CommonResponseType<LoginResponseDataType>>(
+      '/auth/login',
+      data
+    );
   },
   logout() {
-    return instance.delete<CommonResponseType>('/auth/login')
+    return instance.delete<CommonResponseType>('/auth/login');
   },
   authMe() {
     return instance.get<CommonResponseType<AuthMeResponseDataType>>('/auth/me');
