@@ -65,12 +65,6 @@ export const TodolistsList = React.memo(() => {
   const isLoggedIn = useSelector<AppRootStateType, boolean>(
     (state) => state.auth.isLoggedIn
   );
-  /*  Почему не стоит получать весь стейт. По сути мы подписываемся на изменения всего стейта, и при любом изменении в
-          стейте компоненты будут перерисовываться, даже если это не нужно,
-          т.е. нужно для каждого отдельного свойства стейта доставать его через свой useSelector, избежим ненужных перерисовок
-          Можно сделать с деструктуризацией (хороший способ)
-          const {tasks, todolists} = useSelector<AppRootStateType, AppRootStateType>(state => state)
-          */
   const addTodolist = useCallback((newTitle: string) => {
     dispatch(createTodolistTC(newTitle));
   }, []);
@@ -114,7 +108,7 @@ export const TodolistsList = React.memo(() => {
   },
   []);
   if (!isLoggedIn) {
-    return <Navigate to={'/todolist/login'} />;
+    return <Navigate to={'/login'} />;
   }
   return (
     <>

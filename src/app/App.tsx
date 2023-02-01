@@ -3,7 +3,7 @@ import './App.css';
 import { CircularProgress, Container } from '@material-ui/core';
 import ButtonAppBar from '../components/ButtonAppBar';
 import { TodolistsList } from '../features/TodolistsList/TodolistsList';
-import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from '../features/Login/Login';
 import ErrorSnackbar from '../components/ErrorSnackbar/ErrorSnackbar';
 import { TaskType } from '../api/todolist-api.type';
@@ -12,6 +12,7 @@ import { initializeAppTC } from '../state/app-reducer';
 import { AppRootStateType } from './store';
 import { logoutTC } from '../state/auth-reducer';
 import { RequestStatusType } from '../state/app-reducer.type';
+import PageNotFound from '../components/PageNotFound/PageNotFound';
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -51,28 +52,20 @@ function App() {
   };
   return (
     <>
-      <BrowserRouter>
-        <ErrorSnackbar />
-        <ButtonAppBar
-          logoutHandler={logoutHandler}
-          status={status}
-          isLoggedIn={isLoggedIn}
-        />
-        <Container fixed>
-          <Routes>
-            <Route
-              path='/todolist/404'
-              element={<h1>404: PAGE NOT FOUND</h1>}
-            />
-            <Route
-              path='/todolist/*'
-              element={<Navigate to='/todolist/404' />}
-            />
-            <Route path='/todolist/' element={<TodolistsList />} />
-            <Route path='/todolist/login' element={<Login />} />
-          </Routes>
-        </Container>
-      </BrowserRouter>
+      <ErrorSnackbar />
+      <ButtonAppBar
+        logoutHandler={logoutHandler}
+        status={status}
+        isLoggedIn={isLoggedIn}
+      />
+      <Container fixed>
+        <Routes>
+          <Route path='/404' element={<PageNotFound />} />
+          <Route path='/*' element={<Navigate to='/404' />} />
+          <Route path='/' element={<TodolistsList />} />
+          <Route path='/login' element={<Login />} />
+        </Routes>
+      </Container>
     </>
   );
 }
