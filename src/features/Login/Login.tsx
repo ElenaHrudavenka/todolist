@@ -43,7 +43,6 @@ export const Login = () => {
       return errors;
     },
     onSubmit: (values) => {
-      /*alert(JSON.stringify(values));*/
       dispatch(setIsLoggedInTC({ ...values, captcha: true }));
       formik.resetForm();
     },
@@ -66,6 +65,7 @@ export const Login = () => {
                 <a
                   href={'https://social-network.samuraijs.com/'}
                   target={'_blank'}
+                  rel="noopener noreferrer"
                 >
                   register
                 </a>{' '}
