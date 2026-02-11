@@ -19,16 +19,21 @@ export type TasksStateType = {
 };
 
 function App() {
+
   const dispatch = useDispatch();
+
   const isInitialized = useSelector<AppRootStateType, boolean>(
     (state) => state.app.isInitialized
   );
+
   const status = useSelector<AppRootStateType, RequestStatusType>(
     (state) => state.app.status
   );
+
   const isLoggedIn = useSelector<AppRootStateType, boolean>(
     (state) => state.auth.isLoggedIn
   );
+  
   useEffect(() => {
     dispatch(initializeAppTC());
   }, [dispatch]);
@@ -60,8 +65,8 @@ function App() {
       />
       <Container fixed>
         <Routes>
-          <Route path='/' element={<TodolistsList />} />
-          <Route path='/todolist' element={<TodolistsList />} />
+          <Route path='/' element={isLoggedIn ? <TodolistsList /> : <Navigate to='/login' />} />
+          <Route path='/todolist' element={isLoggedIn ? <TodolistsList /> : <Navigate to='/login' />} />
           <Route path='/login' element={<Login />} />
           <Route path='/404' element={<PageNotFound />} />
           <Route path='*' element={<Navigate to='/404' />} />
