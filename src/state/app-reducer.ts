@@ -7,6 +7,7 @@ import {
 import { Dispatch } from 'redux';
 import { AuthActionsTypes } from './auth-reducer.type';
 import { setIsLoggedInAC } from './auth-reducer';
+import { resultCode } from '../api/todolist-api.type';
 
 const initialState = {
   status: 'idle' as RequestStatusType,
@@ -39,12 +40,19 @@ export const setAuthMeAC = (authMe: boolean) =>
 
 export const initializeAppTC =
   () => (dispatch: Dispatch<AppActionsType | AuthActionsTypes>) => {
-    authAPI.authMe().then((res) => {
-      if (res.data.resultCode === 0) {
-        dispatch(setAuthMeAC(true));
-      } else {
-        dispatch(setAuthMeAC(true));
+    authAPI.authMe()
+      .then((res) => {
+        console.log(res.data.resultCode);
+        if (res.data.resultCode === 0) {
+          dispatch(setIsLoggedInAC(true));
+        } else {
+          dispatch(setIsLoggedInAC(false));
+        }
+      })
+      .catch(() => {
         dispatch(setIsLoggedInAC(false));
-      }
-    });
+      })
+      .finally(() => {
+        dispatch(setAuthMeAC(true));
+      });
   };
