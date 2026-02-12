@@ -3,3 +3,16 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+input {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: black;
+  transition: background-color 5000s ease-in-out 0s; /* ещё один трюк для Chrome */
+}
