@@ -80,7 +80,7 @@ export const Login = () => {
                 Login
               </Button>
               <LightTooltip
-                title={<Typography>Use these public credentials to log in to the demo account</Typography>}
+                title={<Typography variant="body2">Login with demo credentials and signs in</Typography>}
                 placement='top'
               >
                 <Button

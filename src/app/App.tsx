@@ -13,6 +13,7 @@ import { AppRootStateType } from './store';
 import { logoutTC } from '../state/auth-reducer';
 import { RequestStatusType } from '../state/app-reducer.type';
 import PageNotFound from '../components/PageNotFound/PageNotFound';
+import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -65,8 +66,8 @@ function App() {
       />
       <Container fixed>
         <Routes>
-          <Route path='/' element={isLoggedIn ? <TodolistsList /> : <Navigate to='/login' />} />
-          <Route path='/todolist' element={isLoggedIn ? <TodolistsList /> : <Navigate to='/login' />} />
+          <Route index element={<ProtectedRoute><TodolistsList /></ProtectedRoute>}/>
+          <Route path="/todolist" element={<ProtectedRoute><TodolistsList /></ProtectedRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/404' element={<PageNotFound />} />
           <Route path='*' element={<Navigate to='/404' />} />
