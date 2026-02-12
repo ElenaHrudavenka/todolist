@@ -88,7 +88,6 @@ export const Todolist = React.memo((props: PropsType) => {
       />
       <div>
         {
-          /*tasksForTodolist?.map((el) => {*/
           tasksForTodolist?.map((el) => {
             return (
               <Task
