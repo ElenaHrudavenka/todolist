@@ -42,7 +42,6 @@ export const initializeAppTC =
   () => (dispatch: Dispatch<AppActionsType | AuthActionsTypes>) => {
     authAPI.authMe()
       .then((res) => {
-        console.log(res.data.resultCode);
         if (res.data.resultCode === 0) {
           dispatch(setIsLoggedInAC(true));
         } else {
